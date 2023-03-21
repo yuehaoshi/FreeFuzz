@@ -19,6 +19,8 @@ class ArgType(IntEnum):
     KERAS_TENSOR = 13
     TF_VARIABLE = 14
     TF_OBJECT = 15
+
+    # TODO: should define the paddle type here
     
 
 
