@@ -1,7 +1,7 @@
 import torch.nn.utils.prune
 
-import decorate_function
-import decorate_class
+from torch.decorate_func import decorate_function
+from torch.decorate_cls import decorate_class
 import inspect
 
 def hijack(obj, func_name_str, mode=""):

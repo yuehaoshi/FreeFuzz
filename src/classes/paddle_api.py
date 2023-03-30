@@ -1,7 +1,7 @@
-import torch
+import paddle
 from classes.argument import *
 from classes.api import *
-from classes.database import TorchDatabase
+from classes.database import PaddleDatabase
 
 # TODO: create paddle_argument class
 class PaddleArgument(Argument):
