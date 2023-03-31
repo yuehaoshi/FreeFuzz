@@ -1,4 +1,4 @@
-import paddle
+import paddle as pd
 from classes.argument import *
 from classes.api import *
 from classes.database import PaddleDatabase
@@ -7,6 +7,13 @@ from classes.database import PaddleDatabase
 class PaddleArgument(Argument):
     # def __init__(self, arg_type: ArgType,arg_name: str = None) -> None:
     #     super().__init__(arg_type, arg_value, arg_name)
+
+    _dtypes = [
+        pd.bfloat16, pd.bool, pd.complex128, pd.complex64,
+        pd.uint8, pd.int8, pd.int16, pd.int32, pd.int64,
+        pd.float32, pd.float64, pd.float16
+    ]
+
 
     def to_code(self, prefix="arg") -> str:
         pass
