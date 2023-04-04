@@ -1,12 +1,12 @@
-# FreeFuzz
+# FreeFuzz Extension for Paddlepaddle
 
-This is the artifact of the research paper, "Free Lunch for Testing: Fuzzing Deep-Learning Libraries from Open Source", at ICSE 2022.
+This project utilizes the methodology outlined in the research paper titled "Free Lunch for Testing: Fuzzing Deep-Learning Libraries from Open Source", presented at ICSE 2022. While the original paper focused on PyTorch and Tensorflow as the targeted DL libraries, this project aims to expand the scope by incorporating PaddlePaddle for further testing using Freefuzz's technique.
 
 ## About
 
 FreeFuzz is the first approach to fuzzing DL libraries via mining from open source. It collects code/models from three different sources: 1) code snippets from the library documentation, 2) library developer tests, and 3) DL models in the wild. Then, FreeFuzz automatically runs all the collected code/models with instrumentation to collect the dynamic information for each covered API. Lastly, FreeFuzz will leverage the traced dynamic information to perform fuzz testing for each covered API.
 
-This is the FreeFuzz's implementation for testing PyTorch and TensorFlow.
+This is the FreeFuzz's implementation for testing PaddlePaddle.
 
 ## Getting Started
 
@@ -19,26 +19,22 @@ This is the FreeFuzz's implementation for testing PyTorch and TensorFlow.
 
 ### 2. Setting Up with Dataset
 
-#### Using Our Dataset
+~~#### Using Our Dataset~~
 
-Run the following command to load the database.
+~~Run the following command to load the database.~~
 
-```shell
-mongorestore dump/
-```
+~~```shell~~
+~~mongorestore dump/~~
+~~```~~  
+*Those above lines has not been supported by current progress. It will be supported later.*
 
 #### Collecting Data by Yourself
 
-1. Go to `src/instrumentation/{torch, tensorflow}` to see how to intrument the dynamic information and add them into the database
-2. After adding invocation data, you should run the following command to preprocess the data for PyTorch
+1. Go to `src/instrumentation/paddlepaddle` to see how to intrument the dynamic information and add them into the database
+2. After adding invocation data, you should run the following command to preprocess the data for PaddlePaddle
 
 ```shell
-cd src && python preprocess/process_data.py torch
-```
-
-or for TensorFlow
-```shell
-cd src && python preprocess/process_data.py tf
+cd src && python preprocess/process_data.py paddle
 ```
 
 ### 3. Configuration
@@ -59,6 +55,8 @@ port = 27017
 torch_database = freefuzz-torch
 # name of tensorflow database
 tf_database = freefuzz-tf
+# name of paddlepaddle database
+paddle_database = freefuzz-paddle
 ```
 
 2. Output directory configuration.
@@ -69,6 +67,8 @@ tf_database = freefuzz-tf
 torch_output = torch-output
 # output directory for tensorflow
 tf_output = tf-output
+# output directory for paddlepaddle
+paddle_output = paddle-output
 ```
 
 3. Oracle configuration.
@@ -103,16 +103,10 @@ each_api_run_times = 1000
 
 ### 4. Start
 
-After finishing above steps, run the following command to start FreeFuzz to test PyTorch
+After finishing above steps, run the following command to start FreeFuzz to test PaddlePaddle
 
 ```shell
-cd src && python FreeFuzz.py --conf demo_torch.conf
-```
-
-Or run this command to test TensorFlow
-
-```shell
-cd src && python FreeFuzz.py --conf demo_tf.conf
+cd src && python FreeFuzz.py --conf demo_paddle.conf
 ```
 
 To run the full experiment, run the following command
@@ -123,7 +117,7 @@ If you want to use another configuration file, you can put it in `src/config`.
 
 Note that you should specify the configuration file you want to use.
 
-## Notes
+~~## Notes~~
 
-1. Some APIs will be skipped since they may crash the program. You can set what you want to skip in the file `src/config/skip_torch.txt` or `src/config/skip_tf`.
-2. For the details of three mutation strategies, please refer to our paper.
+~~1. Some APIs will be skipped since they may crash the program. You can set what you want to skip in the file `src/config/skip_torch.txt` or `src/config/skip_tf`.~~
+~~2. For the details of three mutation strategies, please refer to our paper.~~
