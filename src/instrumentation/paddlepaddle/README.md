@@ -6,7 +6,7 @@ We hook the invocation of `5` PaddlePaddle APIs in total, and the API names are 
 
 ## Usage:
 
-(1) Copy the files (except `__init__.py`) under this `instrumentation` folder to the root directory where Pytorch is installed. You may want to obtain the path by running the following commands:
+(1) Copy the files (except `__init__.py` and `APIExcecution.py`) under this `instrumentation/paddlepaddle` folder to the root directory where Pytorch is installed. You may want to obtain the path by running the following commands:
 ```
 pip show paddlepaddle
 ```

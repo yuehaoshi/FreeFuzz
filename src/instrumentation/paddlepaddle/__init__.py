@@ -35,20 +35,9 @@ def hijack(obj, func_name_str, mode=""):
 
 with open(__file__.replace("__init__.py", "paddle.txt"), "r") as f1:
     lines = f1.readlines()
-    skipped = ["enable_grad", "get_default_dtype", "load", "tensor", "no_grad", "jit"]
+    skipped = ["nn.Mish", "Tensor.Overview"]
     for l in lines:
+        l = l[len("paddle."):]
         l = l.strip()
         if l not in skipped:
             hijack(paddle, l, mode="function")
-
-with open(__file__.replace("__init__.py", "paddle.nn.txt"), "r") as f2:
-    lines = f2.readlines()
-    for l in lines:
-        l = l.strip()
-        hijack(paddle, l)
-
-with open(__file__.replace("__init__.py", "paddle.nn.functional.txt"), "r") as f3:
-    lines = f3.readlines()
-    for l in lines:
-        l = l.strip()
-        hijack(paddle, l, "function")
