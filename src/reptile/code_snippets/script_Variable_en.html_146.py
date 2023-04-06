@@ -1,0 +1,1 @@
+shard_size = (index_num + nshards - 1) // nshards
