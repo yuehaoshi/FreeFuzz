@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"61efeb961fc54551a5b0c042494e74f6","collectionName":"paddle.static.device_guard","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"083569e6c8f84d14907f92e62a8df341","collectionName":"paddle.static.device_guard","type":"collection"}

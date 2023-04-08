@@ -16,6 +16,10 @@ for text in lines:
     # Remove everything after "[source]"
     text = re.sub(r"\[source\].*$", "", text)
 
+    # Skip lines that do not end with ")"
+    if not text.strip().endswith(")"):
+        continue
+        
     # Skip empty lines
     if not text.strip():
         continue

@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"b0cc7128943d4443a5053a39de3436e8","collectionName":"paddle.nn.SmoothL1Loss","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"65165f40b010471b924e08b6ddc746f6","collectionName":"paddle.nn.SmoothL1Loss","type":"collection"}

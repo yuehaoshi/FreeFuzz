@@ -35,12 +35,9 @@ paddle.concat(x, axis=0, name=None)
 paddle.conj(x, name=None)
 paddle.cos(x, name=None)
 paddle.cosh(x, name=None)
-paddle.CPUPlace 
 paddle.create_parameter(shape, dtype, name=None, attr=None, is_bias=False, default_initializer=None)
 paddle.crop(x, shape=None, offsets=None, name=None)
 paddle.cross(x, y, axis=None, name=None)
-paddle.CUDAPinnedPlace 
-paddle.CUDAPlace get_device_id(self: paddle.fluid.core_avx.CUDAPlace)→ intget_device_id¶ 
 paddle.cumprod(x, dim=None, dtype=None, name=None)
 paddle.cumsum(x, axis=None, dtype=None, name=None)
 paddle.DataParallel(layers, strategy=None, comm_buffer_size=25, last_comm_buffer_size=1, find_unused_parameters=False)
@@ -53,7 +50,6 @@ paddle.disable_static(place=None)
 paddle.dist(x, y, p=2, name=None)
 paddle.divide(x, y, name=None)
 paddle.dot(x, y, name=None)
-paddle.dtype 
 paddle.einsum(equation, *operands)
 paddle.empty(shape, dtype=None, name=None)
 paddle.empty_like(x, dtype=None, name=None)
@@ -125,12 +121,10 @@ paddle.multiplex(inputs, index, name=None)
 paddle.multiply(x, y, name=None)
 paddle.mv(x, vec, name=None)
 paddle.neg(x, name=None)
-paddle.no_grad
 paddle.nonzero(x, as_tuple=False)
 paddle.norm(x, p='fro', axis=None, keepdim=False, name=None)
 paddle.normal(mean=0.0, std=1.0, shape=None, name=None)
 paddle.not_equal(x, y, name=None)
-paddle.NPUPlace get_device_id(self: paddle.fluid.core_avx.NPUPlace)→ intget_device_id¶ 
 paddle.numel(x, name=None)
 paddle.ones(shape, dtype=None, name=None)
 paddle.ones_like(x, dtype=None, name=None)
@@ -212,9 +206,6 @@ paddle.amp.auto_cast(enable=True, custom_white_list=None, custom_black_list=None
 paddle.amp.decorate(models, optimizers=None, level='O1', master_weight=None, save_dtype=None)
 paddle.amp.GradScaler(enable=True, init_loss_scaling=32768.0, incr_ratio=2.0, decr_ratio=0.5, incr_every_n_steps=1000, decr_every_n_nan_or_inf=2, use_dynamic_loss_scaling=True)
 paddle.autograd.backward(tensors, grad_tensors=None, retain_graph=False)
-paddle.autograd.PyLayer
-paddle.autograd.PyLayerContext
-paddle.callbacks.Callback
 paddle.callbacks.EarlyStopping(monitor='loss', mode='auto', patience=0, verbose=1, min_delta=0, baseline=None, save_best_model=True)
 paddle.callbacks.LRScheduler(by_step=True, by_epoch=False)
 paddle.callbacks.ModelCheckpoint(save_freq=1, save_dir=None)
@@ -242,22 +233,17 @@ paddle.distributed.gloo_barrier()
 paddle.distributed.gloo_init_parallel_env(rank_id, rank_num, server_endpoint)
 paddle.distributed.gloo_release()
 paddle.distributed.init_parallel_env()
-paddle.distributed.InMemoryDataset
 paddle.distributed.launch()
 paddle.distributed.new_group(ranks=None, backend=None)
-paddle.distributed.ParallelEnv
 paddle.distributed.ProbabilityEntry(probability)
-paddle.distributed.QueueDataset
 paddle.distributed.recv(tensor, src=0, group=None, use_calc_stream=True)
 paddle.distributed.reduce(tensor, dst, op=0, group=None, use_calc_stream=True)
-paddle.distributed.ReduceOp
 paddle.distributed.scatter(tensor, tensor_list=None, src=0, group=None, use_calc_stream=True)
 paddle.distributed.send(tensor, dst=0, group=None, use_calc_stream=True)
 paddle.distributed.spawn(func, args=(), nprocs=-1, join=True, daemon=False, **options)
 paddle.distributed.split(x, size, operation, axis=0, num_partitions=1, gather_out=True, weight_attr=None, bias_attr=None, name=None)
 paddle.distributed.wait(tensor, group=None, use_calc_stream=True)
 paddle.distribution.Categorical(logits, name=None)
-paddle.distribution.Distribution
 paddle.distribution.Normal(loc, scale, name=None)
 paddle.distribution.Uniform(low, high, name=None)
 paddle.fft.fft(x, n=None, axis=-1, norm='backward', name=None)
@@ -295,21 +281,12 @@ paddle.incubate.segment_min(data, segment_ids, name=None)
 paddle.incubate.segment_sum(data, segment_ids, name=None)
 paddle.incubate.softmax_mask_fuse(x, mask, name=None)
 paddle.incubate.softmax_mask_fuse_upper_triangle(x)
-paddle.inference.Config 
-paddle.inference.DataType 
-paddle.inference.PlaceType 
-paddle.inference.PrecisionType 
-paddle.inference.Predictor 
-paddle.inference.PredictorPool retrive(self: paddle.fluid.core_avx.PredictorPool, arg0: int)→ paddle.fluid.core_avx.PaddleInferPredictorretrive¶ 
-paddle.inference.Tensor 
 paddle.io.BatchSampler(dataset=None, sampler=None, shuffle=False, batch_size=1, drop_last=False)
 paddle.io.ChainDataset(datasets)
 paddle.io.ComposeDataset(datasets)
 paddle.io.DataLoader(dataset, feed_list=None, places=None, return_list=True, batch_sampler=None, batch_size=1, shuffle=False, drop_last=False, collate_fn=None, num_workers=0, use_buffer_reader=True, use_shared_memory=True, timeout=0, worker_init_fn=None, persistent_workers=False)
-paddle.io.Dataset
 paddle.io.DistributedBatchSampler(dataset, batch_size, num_replicas=None, rank=None, shuffle=False, drop_last=False)
 paddle.io.get_worker_info()
-paddle.io.IterableDataset
 paddle.io.random_split(dataset, lengths, generator=None)
 paddle.io.RandomSampler(data_source, replacement=False, num_samples=None, generator=None)
 paddle.io.Sampler(data_source=None)
@@ -344,7 +321,6 @@ paddle.linalg.triangular_solve(x, y, upper=True, transpose=False, unitriangular=
 paddle.metric.Accuracy(topk=(1,), name=None, *args, **kwargs)
 paddle.metric.accuracy(input, label, k=1, correct=None, total=None, name=None)
 paddle.metric.Auc(curve='ROC', num_thresholds=4095, name='auc', *args, **kwargs)
-paddle.metric.Metric
 paddle.metric.Precision(name='precision', *args, **kwargs)
 paddle.metric.Recall(name='recall', *args, **kwargs)
 paddle.nn.AdaptiveAvgPool1D(output_size, name=None)
@@ -474,7 +450,6 @@ paddle.signal.stft(x, n_fft, hop_length=None, win_length=None, window=None, cent
 paddle.static.accuracy(input, label, k=1, correct=None, total=None)
 paddle.static.append_backward(loss, parameter_list=None, no_grad_set=None, callbacks=None, checkpoints=None)
 paddle.static.auc(input, label, curve='ROC', num_thresholds=4095, topk=1, slide_steps=1)
-paddle.static.BuildStrategy class GradientScaleStrategy property name class ReduceStrategy property name property debug_graphviz_path property enable_auto_fusion property enable_sequential_execution property fuse_bn_act_ops property fuse_bn_add_act_ops property fuse_broadcast_ops property fuse_elewise_add_act_ops property fuse_relu_depthwise_conv property gradient_scale_strategy property memory_optimize property reduce_strategy property remove_unnecessary_lock property sync_batch_norm 
 paddle.static.CompiledProgram(program_or_graph, build_strategy=None)
 paddle.static.cpu_places(device_count=None)
 paddle.static.create_global_var(shape, value, dtype, persistable=False, force_cpu=False, name=None)
@@ -485,7 +460,6 @@ paddle.static.default_startup_program()
 paddle.static.deserialize_persistables(program, data, executor)
 paddle.static.deserialize_program(data)
 paddle.static.device_guard(device=None)
-paddle.static.ExecutionStrategy property allow_op_delay property num_iteration_per_drop_scope property num_iteration_per_run property num_threads property use_thread_barrier 
 paddle.static.Executor(place=None)
 paddle.static.ExponentialMovingAverage(decay=0.999, thres_steps=None, name=None)
 paddle.static.global_scope()
@@ -499,7 +473,6 @@ paddle.static.name_scope(prefix=None)
 paddle.static.normalize_program(program, feed_vars, fetch_vars)
 paddle.static.ParallelExecutor(use_cuda, loss_name=None, main_program=None, share_vars_from=None, exec_strategy=None, build_strategy=None, num_trainers=1, trainer_id=0, scope=None)
 paddle.static.Print(input, first_n=-1, message=None, summarize=20, print_tensor_name=True, print_tensor_type=True, print_tensor_shape=True, print_tensor_layout=True, print_tensor_lod=True, print_phase='both')
-paddle.static.Program
 paddle.static.program_guard(main_program, startup_program=None)
 paddle.static.py_func(func, x, out, backward_func=None, skip_vars_in_backward_input=None)
 paddle.static.save(program, model_path, protocol=4, **configs)
