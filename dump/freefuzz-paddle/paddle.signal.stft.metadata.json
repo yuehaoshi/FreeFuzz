@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"d6caa704411a46dfb1f08ba1c345cf69","collectionName":"paddle.signal.stft","type":"collection"}

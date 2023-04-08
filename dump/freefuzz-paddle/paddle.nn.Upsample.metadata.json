@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"668925322b5745f69854009e536e55d6","collectionName":"paddle.nn.Upsample","type":"collection"}

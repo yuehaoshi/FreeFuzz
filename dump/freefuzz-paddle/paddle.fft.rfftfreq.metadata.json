@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"db85306455e548d6bc4bd9ce9f6824a9","collectionName":"paddle.fft.rfftfreq","type":"collection"}

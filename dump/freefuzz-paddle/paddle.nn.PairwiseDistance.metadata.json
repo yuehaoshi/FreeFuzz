@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"8acf22de153442168ff94a1c48521ed8","collectionName":"paddle.nn.PairwiseDistance","type":"collection"}

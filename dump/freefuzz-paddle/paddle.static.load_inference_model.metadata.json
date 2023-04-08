@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"666f982f1a1b4a5493892cb5a6141eaa","collectionName":"paddle.static.load_inference_model","type":"collection"}

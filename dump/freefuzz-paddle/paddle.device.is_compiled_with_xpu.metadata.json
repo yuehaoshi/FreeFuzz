@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"587afe77790c49d2898720bcc2c118f5","collectionName":"paddle.device.is_compiled_with_xpu","type":"collection"}

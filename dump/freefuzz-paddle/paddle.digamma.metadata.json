@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"eb7e63fa33e542fcbc713d6fb7b3b70c","collectionName":"paddle.digamma","type":"collection"}
