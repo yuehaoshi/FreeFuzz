@@ -144,77 +144,72 @@ class PaddleArgument(Argument):
             print(self.type, self.value)
             assert (0)
 
-    # @staticmethod
-    # def generate_arg_from_signature(signature):
-    #     """Generate a Torch argument from the signature"""
-    #     if signature == "paddleTensor":
-    #         return PaddleArgument(None,
-    #                              ArgType.PADDLE_TENSOR,
-    #                              shape=[2, 2],
-    #                              dtype=paddle.float32)
-    #     if signature == "paddledtype":
-    #         return PaddleArgument(choice(PaddleArgument._dtypes),
-    #                              ArgType.PADDLE_DTYPE)
-    #     if isinstance(signature, str) and signature == "paddledevice":
-    #         value = paddle.set_device("cpu")
-    #         return PaddleArgument(value, ArgType.TORCH_OBJECT)
-    #     paddle.strided_slice()
-    #     if isinstance(signature, str) and signature == "torch.strided":
-    #         return TorchArgument("torch.strided", ArgType.TORCH_OBJECT)
-    #     if isinstance(signature, str) and signature.startswith("torch."):
-    #         value = eval(signature)
-    #         if isinstance(value, torch.dtype):
-    #             return TorchArgument(value, ArgType.TORCH_DTYPE)
-    #         elif isinstance(value, torch.memory_format):
-    #             return TorchArgument(value, ArgType.TORCH_OBJECT)
-    #         print(signature)
-    #         assert (0)
-    #     if isinstance(signature, bool):
-    #         return TorchArgument(signature, ArgType.BOOL)
-    #     if isinstance(signature, int):
-    #         return TorchArgument(signature, ArgType.INT)
-    #     if isinstance(signature, str):
-    #         return TorchArgument(signature, ArgType.STR)
-    #     if isinstance(signature, float):
-    #         return TorchArgument(signature, ArgType.FLOAT)
-    #     if isinstance(signature, tuple):
-    #         value = []
-    #         for elem in signature:
-    #             value.append(TorchArgument.generate_arg_from_signature(elem))
-    #         return TorchArgument(value, ArgType.TUPLE)
-    #     if isinstance(signature, list):
-    #         value = []
-    #         for elem in signature:
-    #             value.append(TorchArgument.generate_arg_from_signature(elem))
-    #         return TorchArgument(value, ArgType.LIST)
-    #     # signature is a dictionary
-    #     if isinstance(signature, dict):
-    #         if not ('shape' in signature.keys()
-    #                 and 'dtype' in signature.keys()):
-    #             raise Exception('Wrong signature {0}'.format(signature))
-    #         shape = signature['shape']
-    #         dtype = signature['dtype']
-    #         # signature is a ndarray or tensor.
-    #         if isinstance(shape, (list, tuple)):
-    #             if not dtype.startswith("torch."):
-    #                 dtype = f"torch.{dtype}"
-    #             dtype = eval(dtype)
-    #             max_value, min_value = TorchArgument.random_tensor_value(dtype)
-    #             return TorchArgument(None,
-    #                                  ArgType.TORCH_TENSOR,
-    #                                  shape,
-    #                                  dtype=dtype,
-    #                                  max_value=max_value,
-    #                                  min_value=min_value)
-    #         else:
-    #             return TorchArgument(None,
-    #                                  ArgType.TORCH_TENSOR,
-    #                                  shape=[2, 2],
-    #                                  dtype=torch.float32)
-    #     return TorchArgument(None, ArgType.NULL)
-
-    def to_code_oracle(self, prefix="arg", oracle=OracleType.CRASH) -> str:
-        pass
+    @staticmethod
+    def generate_arg_from_signature(signature):
+        """Generate a Paddle argument from the signature"""
+        if signature == "paddleTensor":
+            return PaddleArgument(None,
+                                 ArgType.PADDLE_TENSOR,
+                                 shape=[2, 2],
+                                 dtype=paddle.float32)
+        if signature == "paddledtype":
+            return PaddleArgument(choice(PaddleArgument._dtypes),
+                                 ArgType.PADDLE_DTYPE)
+        if isinstance(signature, str) and signature == "paddledevice":
+            value = paddle.set_device("cpu")
+            return PaddleArgument(value, ArgType.PADDLE_OBJECT)
+        paddle.strided_slice()
+        # if isinstance(signature, str) and signature == "torch.strided":
+        #     return TorchArgument("torch.strided", ArgType.TORCH_OBJECT)
+        if isinstance(signature, str) and signature.startswith("paddle."):
+            value = eval(signature)
+            if isinstance(value, paddle.dtype):
+                return PaddleArgument(value, ArgType.PADDLE_DTYPE)
+            print(signature)
+            assert (0)
+        if isinstance(signature, bool):
+            return PaddleArgument(signature, ArgType.BOOL)
+        if isinstance(signature, int):
+            return PaddleArgument(signature, ArgType.INT)
+        if isinstance(signature, str):
+            return PaddleArgument(signature, ArgType.STR)
+        if isinstance(signature, float):
+            return PaddleArgument(signature, ArgType.FLOAT)
+        if isinstance(signature, tuple):
+            value = []
+            for elem in signature:
+                value.append(PaddleArgument.generate_arg_from_signature(elem))
+            return PaddleArgument(value, ArgType.TUPLE)
+        if isinstance(signature, list):
+            value = []
+            for elem in signature:
+                value.append(PaddleArgument.generate_arg_from_signature(elem))
+            return PaddleArgument(value, ArgType.LIST)
+        # signature is a dictionary
+        if isinstance(signature, dict):
+            if not ('shape' in signature.keys()
+                    and 'dtype' in signature.keys()):
+                raise Exception('Wrong signature {0}'.format(signature))
+            shape = signature['shape']
+            dtype = signature['dtype']
+            # signature is a ndarray or tensor.
+            if isinstance(shape, (list, tuple)):
+                if not dtype.startswith("paddle."):
+                    dtype = f"paddle.{dtype}"
+                dtype = eval(dtype)
+                max_value, min_value = PaddleArgument.random_tensor_value(dtype)
+                return PaddleArgument(None,
+                                     ArgType.PADDLE_TENSOR,
+                                     shape,
+                                     dtype=dtype,
+                                     max_value=max_value,
+                                     min_value=min_value)
+            else:
+                return PaddleArgument(None,
+                                     ArgType.PADDLE_TENSOR,
+                                     shape=[2, 2],
+                                     dtype=paddle.float32)
+        return PaddleArgument(None, ArgType.NULL)
 
     @staticmethod
     def low_precision_dtype(dtype):
@@ -262,10 +257,138 @@ class PaddleArgument(Argument):
 class PADDLEAPI(API):
     def __init__(self, api_name, record=None) -> None:
         super().__init__(api_name)
-        pass
+        if record == None:
+            record = PaddleDatabase.get_rand_record(self.api)
+        self.args = self.generate_args_from_record(record)
+        self.is_class = inspect.isclass(eval(self.api))
 
     def mutate(self, enable_value=True, enable_type=True, enable_db=True):
-        pass
+        num_arg = len(self.args)
+        if num_arg == 0:
+            return
+        num_Mutation = randint(1, num_arg + 1)
+        for _ in range(num_Mutation):
+            arg_name = choice(list(self.args.keys()))
+            arg = self.args[arg_name]
 
-    def to_code_oracle(self, prefix="arg", oracle=OracleType.CRASH) -> str:
-        pass
+            if enable_type and do_type_mutation():
+                arg.mutate_type()
+            do_value_mutation = True
+            if enable_db and do_select_from_db():
+                new_arg, success = PaddleDatabase.select_rand_over_db(
+                    self.api, arg_name)
+                if success:
+                    new_arg = PaddleArgument.generate_arg_from_signature(
+                        new_arg)
+                    self.args[arg_name] = new_arg
+                    do_value_mutation = False
+            if enable_value and do_value_mutation:
+                arg.mutate_value()
+
+    def to_code(self,
+                prefix="arg",
+                res="res",
+                is_cuda=False,
+                use_try=False,
+                error_res=None,
+                low_precision=False) -> str:
+        code = ""
+        arg_str = ""
+        count = 1
+
+        for key, arg in self.args.items():
+            if key == "input_signature":
+                continue
+            arg_name = f"{prefix}_{count}"
+            code += arg.to_code(arg_name,
+                                low_precision=low_precision,
+                                is_cuda=is_cuda)
+            if key.startswith("parameter:"):
+                arg_str += f"{arg_name},"
+            else:
+                arg_str += f"{key}={arg_name},"
+            count += 1
+
+        res_code = ""
+        if self.is_class:
+            if is_cuda:
+                code += f"{prefix}_class = {self.api}({arg_str}).cuda()\n"
+            else:
+                code += f"{prefix}_class = {self.api}({arg_str})\n"
+
+            if "input_signature" in self.args.keys():
+                arg_name = f"{prefix}_{count}"
+                code += self.args["input_signature"].to_code(
+                    arg_name, low_precision=low_precision, is_cuda=is_cuda)
+                res_code = f"{res} = {prefix}_class(*{arg_name})\n"
+        else:
+            res_code = f"{res} = {self.api}({arg_str})\n"
+
+        return code + self.invocation_code(res, error_res, res_code, use_try,
+                                           low_precision)
+
+    @staticmethod
+    def invocation_code(res, error_res, res_code, use_try, low_precision):
+        code = ""
+        if use_try:
+            # specified with run_and_check function in relation_tools.py
+            if error_res == None:
+                error_res = res
+            temp_code = "try:\n"
+            temp_code += API.indent_code(res_code)
+            temp_code += f"except Exception as e:\n  {error_res} = \"ERROR:\"+str(e)\n"
+            res_code = temp_code
+
+        if low_precision:
+            code += "start = time.time()\n"
+            code += res_code
+            code += f"{res} = time.time() - start\n"
+        else:
+            code += res_code
+        return code
+
+    @staticmethod
+    def generate_args_from_record(record: dict) -> dict:
+        args = {}
+        for key in record.keys():
+            if key != "output_signature":
+                args[key] = PaddleArgument.generate_arg_from_signature(
+                    record[key])
+        return args
+
+    def to_diff_code(self,
+                     oracle: OracleType,
+                     prefix="arg",
+                     res="res",
+                     *,
+                     error_res=None,
+                     use_try=False) -> str:
+        """Generate code for the oracle"""
+        code = ""
+        arg_str = ""
+        count = 1
+
+        for key, arg in self.args.items():
+            if key == "input_signature":
+                continue
+            arg_name = f"{prefix}_{count}"
+            code += arg.to_diff_code(arg_name, oracle)
+            if key.startswith("parameter:"):
+                arg_str += f"{arg_name},"
+            else:
+                arg_str += f"{key}={arg_name},"
+            count += 1
+
+        res_code = ""
+        if self.is_class:
+            if oracle == OracleType.CUDA:
+                code = f"{prefix}_class = {prefix}_class.cuda()\n"
+            if "input_signature" in self.args.keys():
+                arg_name = f"{prefix}_{count}"
+                code += self.args["input_signature"].to_diff_code(arg_name, oracle)
+                res_code = f"{res} = {prefix}_class(*{arg_name})\n"
+        else:
+            res_code = f"{res} = {self.api}({arg_str})\n"
+
+        return code + self.invocation_code(res, error_res, res_code, use_try,
+                                           oracle == OracleType.PRECISION)
