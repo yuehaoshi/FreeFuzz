@@ -21,7 +21,10 @@ class ArgType(IntEnum):
     TF_OBJECT = 15
 
     # TODO: should define the paddle type here
-    
+    PADDLE_OBJECT = 16
+    PADDLE_TENSOR = 17
+    PADDLE_DTYPE = 18
+
 
 
 
