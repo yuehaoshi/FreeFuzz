@@ -254,7 +254,7 @@ class PaddleArgument(Argument):
         else:
             return ArgType.PADDLE_OBJECT
 # TODO: create paddle_api class
-class PADDLEAPI(API):
+class PaddleAPI(API):
     def __init__(self, api_name, record=None) -> None:
         super().__init__(api_name)
         if record == None:
