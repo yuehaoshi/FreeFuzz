@@ -48,10 +48,11 @@ class PaddleArgument(Argument):
             suffix = ""
             if is_cuda:
                 suffix = ".cuda()"
-            if dtype.is_floating_point:
+            if dtype in [paddle.float16, paddle.float32, paddle.float64]:
                 code = f"{var_name}_tensor = paddle.rand({self.shape}, dtype={dtype})\n"
-            elif dtype.is_complex:
-                code = f"{var_name}_tensor = paddle.rand({self.shape}, dtype={dtype})\n"
+            elif dtype in [paddle.complex64, paddle.complex128]:
+                code = f"{var_name}_" \
+                       f"tensor = paddle.rand({self.shape}, dtype={dtype})\n"
             elif dtype == paddle.bool:
                 code = f"{var_name}_tensor = paddle.randint(0,2,{self.shape}, dtype={dtype})\n"
             else:
@@ -158,7 +159,6 @@ class PaddleArgument(Argument):
         if isinstance(signature, str) and signature == "paddledevice":
             value = paddle.set_device("cpu")
             return PaddleArgument(value, ArgType.PADDLE_OBJECT)
-        paddle.strided_slice()
         # if isinstance(signature, str) and signature == "torch.strided":
         #     return TorchArgument("torch.strided", ArgType.TORCH_OBJECT)
         if isinstance(signature, str) and signature.startswith("paddle."):
