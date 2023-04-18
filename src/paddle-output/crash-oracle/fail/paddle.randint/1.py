@@ -1,0 +1,8 @@
+import paddle
+arg_1 = -32768
+arg_2 = 4096
+arg_3_0 = 3
+arg_3_1 = 4
+arg_3 = [arg_3_0,arg_3_1,]
+arg_4 = "paddleVarType"
+res = paddle.randint(arg_1,arg_2,arg_3,dtype=arg_4,)

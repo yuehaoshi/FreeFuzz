@@ -1,0 +1,191 @@
+
+  { 
+    "displayTimeUnit": "ms",
+    "schemaVersion": "1.0.2",
+    "span_indx": "0",
+    "traceEvents": [
+  
+  { 
+    "name": "ProfileStep#0[16.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031486, "dur": 16.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "0.000 us",
+      "end_time": "16.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#1[7.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031574, "dur": 7.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "88.000 us",
+      "end_time": "95.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#2[5.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031589, "dur": 5.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "103.000 us",
+      "end_time": "108.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#3[4.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031601, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "115.000 us",
+      "end_time": "119.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#4[4.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031612, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "126.000 us",
+      "end_time": "130.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#5[4.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031623, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "137.000 us",
+      "end_time": "141.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#6[4.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031634, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "148.000 us",
+      "end_time": "152.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#7[5.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031644, "dur": 5.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "158.000 us",
+      "end_time": "163.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#8[4.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031655, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "169.000 us",
+      "end_time": "173.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#9[8.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031666, "dur": 8.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "180.000 us",
+      "end_time": "188.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#10[9.000 us]", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ts": 1681704541031681, "dur": 9.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "195.000 us",
+      "end_time": "204.000 us"
+    }
+  },
+  
+  {
+    "name": "process_name", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 6386 (CPU)"
+    }
+  },
+  {
+    "name": "process_name", "pid": 6386, "tid": "-679839590075568875(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 6386 (CPU)"
+    }
+  },
+   {
+    "name": "thread_name", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "thread -679839590075568875:(Python)"
+    }
+  },
+  {
+    "name": "thread_name", "pid": 6386, "tid": "-679839590075568875(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "thread -679839590075568875:(C++)"
+    }
+  },
+  {
+    "name": "process_sort_index", "pid": 6386, "tid": -679839590075568875,
+    "ph": "M", 
+    "args": {
+      "sort_index": 6386
+    }
+  },  
+  {
+    "name": "thread_sort_index", "pid": 6386, "tid": "-679839590075568875(Python)",
+    "ph": "M", 
+    "args": {
+      "sort_index": -1359679180151137750
+    }
+  },
+  {
+    "name": "thread_sort_index", "pid": 6386, "tid": "-679839590075568875(C++)",
+    "ph": "M", 
+    "args": {
+      "sort_index": -1359679180151137749
+    }
+  },
+  
+  {}
+  ],
+  
+  "ExtraInfo": {
+     "17766904483633982741": "MainThread",
+   
+     "Process Cpu Utilization": "0.000000",
+   
+     "System Cpu Utilization": "0.000000"
+   
+  }
+  }
+  

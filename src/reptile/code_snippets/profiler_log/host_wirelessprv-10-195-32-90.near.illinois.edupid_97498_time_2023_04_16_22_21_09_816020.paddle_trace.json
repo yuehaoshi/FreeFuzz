@@ -1,0 +1,114 @@
+
+  { 
+    "displayTimeUnit": "ms",
+    "schemaVersion": "1.0.2",
+    "span_indx": "0",
+    "traceEvents": [
+  
+  { 
+    "name": "ProfileStep#3[5.000 us]", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ts": 1681701669815562, "dur": 5.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "0.000 us",
+      "end_time": "5.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#4[4.000 us]", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ts": 1681701669815575, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "13.000 us",
+      "end_time": "17.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#5[4.000 us]", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ts": 1681701669815587, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "25.000 us",
+      "end_time": "29.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#6[4.000 us]", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ts": 1681701669815598, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "36.000 us",
+      "end_time": "40.000 us"
+    }
+  },
+  
+  {
+    "name": "process_name", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 97498 (CPU)"
+    }
+  },
+  {
+    "name": "process_name", "pid": 97498, "tid": "7991154564769659678(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 97498 (CPU)"
+    }
+  },
+   {
+    "name": "thread_name", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "thread 7991154564769659678:MainThread(Python)"
+    }
+  },
+  {
+    "name": "thread_name", "pid": 97498, "tid": "7991154564769659678(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "thread 7991154564769659678:MainThread(C++)"
+    }
+  },
+  {
+    "name": "process_sort_index", "pid": 97498, "tid": 7991154564769659678,
+    "ph": "M", 
+    "args": {
+      "sort_index": 97498
+    }
+  },  
+  {
+    "name": "thread_sort_index", "pid": 97498, "tid": "7991154564769659678(Python)",
+    "ph": "M", 
+    "args": {
+      "sort_index": -2464434944170232260
+    }
+  },
+  {
+    "name": "thread_sort_index", "pid": 97498, "tid": "7991154564769659678(C++)",
+    "ph": "M", 
+    "args": {
+      "sort_index": -2464434944170232259
+    }
+  },
+  
+  {}
+  ],
+  
+  "ExtraInfo": {
+     "Process Cpu Utilization": "0.000000",
+   
+     "7991154564769659678": "MainThread",
+   
+     "System Cpu Utilization": "0.000000"
+   
+  }
+  }
+  

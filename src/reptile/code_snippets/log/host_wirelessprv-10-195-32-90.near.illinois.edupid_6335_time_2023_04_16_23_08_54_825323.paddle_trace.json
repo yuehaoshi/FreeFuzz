@@ -1,0 +1,103 @@
+
+  { 
+    "displayTimeUnit": "ms",
+    "schemaVersion": "1.0.2",
+    "span_indx": "0",
+    "traceEvents": [
+  
+  { 
+    "name": "ProfileStep#2[7.000 us]", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ts": 1681704534824431, "dur": 7.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "0.000 us",
+      "end_time": "7.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#3[4.000 us]", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ts": 1681704534824447, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "16.000 us",
+      "end_time": "20.000 us"
+    }
+  },
+  
+  { 
+    "name": "ProfileStep#4[4.000 us]", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ts": 1681704534824458, "dur": 4.000,
+    "ph": "X", "cat": "ProfileStep", 
+    "cname": "thread_state_runnable",
+    "args": {
+      "start_time": "27.000 us",
+      "end_time": "31.000 us"
+    }
+  },
+  
+  {
+    "name": "process_name", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 6335 (CPU)"
+    }
+  },
+  {
+    "name": "process_name", "pid": 6335, "tid": "-9119062212563045445(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "Process 6335 (CPU)"
+    }
+  },
+   {
+    "name": "thread_name", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ph": "M", 
+    "args": {
+      "name": "thread -9119062212563045445:(Python)"
+    }
+  },
+  {
+    "name": "thread_name", "pid": 6335, "tid": "-9119062212563045445(C++)",
+    "ph": "M", 
+    "args": {
+      "name": "thread -9119062212563045445:(C++)"
+    }
+  },
+  {
+    "name": "process_sort_index", "pid": 6335, "tid": -9119062212563045445,
+    "ph": "M", 
+    "args": {
+      "sort_index": 6335
+    }
+  },  
+  {
+    "name": "thread_sort_index", "pid": 6335, "tid": "-9119062212563045445(Python)",
+    "ph": "M", 
+    "args": {
+      "sort_index": 208619648583460726
+    }
+  },
+  {
+    "name": "thread_sort_index", "pid": 6335, "tid": "-9119062212563045445(C++)",
+    "ph": "M", 
+    "args": {
+      "sort_index": 208619648583460727
+    }
+  },
+  
+  {}
+  ],
+  
+  "ExtraInfo": {
+     "Process Cpu Utilization": "0.000000",
+   
+     "9327681861146506171": "MainThread",
+   
+     "System Cpu Utilization": "0.000000"
+   
+  }
+  }
+  

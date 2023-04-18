@@ -1,0 +1,4 @@
+import paddle
+arg_class = paddle.nn.Swish()
+arg_1 = None
+res = arg_class(*arg_1)
