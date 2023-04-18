@@ -1,5 +1,5 @@
 import re
-with open('API_def_ori.txt', 'r') as f:
+with open('API_def.txt', 'r') as f:
     lines = f.readlines()
 
 modified_lines = []

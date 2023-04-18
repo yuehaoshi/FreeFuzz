@@ -3,6 +3,15 @@ from classes.argument import *
 from classes.api import *
 from classes.database import PaddleDatabase
 
+
+def generate_code_fpr_complex_tensor(shape, var_name, t):
+    if t == paddle.complex64:
+        x = paddle.float32
+    else:
+        x = paddle.float64
+    code = f" real = paddle.rand({shape}, {x})\n imag = paddle.rand({shape}, {x})\n {var_name}_tensor = paddle.complex(real, imag)\n"
+    return code
+
 class PaddleArgument(Argument):
     _support_types = [ArgType.PADDLE_DTYPE, ArgType.PADDLE_TENSOR, ArgType.PADDLE_OBJECT]
 
@@ -48,13 +57,14 @@ class PaddleArgument(Argument):
             suffix = ""
             if is_cuda:
                 suffix = ".cuda()"
-            if dtype in [paddle.float16, paddle.float32, paddle.float64]:
+            if dtype in [paddle.float32, paddle.float64]: # float
                 code = f"{var_name}_tensor = paddle.rand({self.shape}, dtype={dtype})\n"
+            elif dtype in [paddle.int32, paddle.int64]: # int
+                code = f"{var_name}_tensor = paddle.randint({min_value},{max_value},{self.shape}, dtype={dtype})\n"
+            elif dtype == paddle.bool: # bool
+                code = f"{var_name}_tensor = paddle.randint(0,2,{self.shape})\n"
             elif dtype in [paddle.complex64, paddle.complex128]:
-                code = f"{var_name}_" \
-                       f"tensor = paddle.rand({self.shape}, dtype={dtype})\n"
-            elif dtype == paddle.bool:
-                code = f"{var_name}_tensor = paddle.randint(0,2,{self.shape}, dtype={dtype})\n"
+                code = generate_code_fpr_complex_tensor(self.shape, var_name, dtype)
             else:
                 code = f"{var_name}_tensor = paddle.randint({min_value},{max_value},{self.shape}, dtype={dtype})\n"
             code += f"{var_name} = {var_name}_tensor.clone(){suffix}\n"
@@ -215,8 +225,8 @@ class PaddleArgument(Argument):
     def low_precision_dtype(dtype):
         if dtype in [paddle.int16, paddle.int32, paddle.int64]:
             return paddle.int8
-        elif dtype in [paddle.float32, paddle.float64]:
-            return paddle.float16
+        elif dtype in [paddle.float16, paddle.float32, paddle.float64]:
+            return paddle.float32
         elif dtype in [paddle.complex128]:
             return paddle.complex64
         return dtype

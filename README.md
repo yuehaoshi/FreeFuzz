@@ -19,14 +19,14 @@ This is the FreeFuzz's implementation for testing PaddlePaddle.
 
 ### 2. Setting Up with Dataset
 
-~~#### Using Our Dataset~~
+In this instrumentation step, you have two options, either using our pre-captured data which are get from official documentation, official tests, and open-source projects, or collecting data by yourself:
+#### Using Our Dataset
 
-~~Run the following command to load the database.~~
+Run the following command to load the database.
 
-~~```shell~~
-~~mongorestore dump/~~
-~~```~~  
-*Those above lines has not been supported by current progress. It will be supported later.*
+```shell
+mongorestore dump/
+```
 
 #### Collecting Data by Yourself
 
