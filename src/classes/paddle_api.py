@@ -4,13 +4,33 @@ from classes.api import *
 from classes.database import PaddleDatabase
 
 
-def generate_code_fpr_complex_tensor(shape, var_name, t):
+def generate_code_for_complex_tensor(shape, var_name, t):
     if t == paddle.complex64:
         x = paddle.float32
     else:
         x = paddle.float64
     code = f" real = paddle.rand({shape}, {x})\n imag = paddle.rand({shape}, {x})\n {var_name}_tensor = paddle.complex(real, imag)\n"
     return code
+
+
+def generate_code_for_int8_tensor(shape, var_name):
+    code = f"int_tensor = paddle.randint(low=-128, high=127, shape={shape}, dtype='int32')\n int8_tensor = int_tensor.astype('int8')\n {var_name}_tensor = int8_tensor\n"
+    return code
+
+def generate_code_for_uint8_tensor(shape, var_name):
+    code = f"int_tensor = paddle.randint(low=0, high=255, shape={shape}, dtype='int32')\n uint8_tensor = int_tensor.astype('uint8')\n {var_name}_tensor = uint8_tensor\n"
+    return code
+
+
+def generate_code_for_int16_tensor(shape, var_name):
+    code = f"int_tensor = paddle.randint(low=-32768, high=32767, shape={shape}, dtype='int32')\n int16_tensor = int_tensor.astype('int16')\n {var_name}_tensor = int16_tensor\n"
+    return code
+
+
+def generate_code_for_f16_tensor(shape, var_name):
+    code = f"float_tensor = paddle.rand({shape}, 'float32')\n f16_tensor = float_tensor.astype('float16')\n {var_name}_tensor = f16_tensor\n"
+    return code
+
 
 class PaddleArgument(Argument):
     _support_types = [ArgType.PADDLE_DTYPE, ArgType.PADDLE_TENSOR, ArgType.PADDLE_OBJECT]
@@ -64,7 +84,15 @@ class PaddleArgument(Argument):
             elif dtype == paddle.bool: # bool
                 code = f"{var_name}_tensor = paddle.randint(0,2,{self.shape})\n"
             elif dtype in [paddle.complex64, paddle.complex128]:
-                code = generate_code_fpr_complex_tensor(self.shape, var_name, dtype)
+                code = generate_code_for_complex_tensor(self.shape, var_name, dtype)
+            elif dtype == paddle.int8:
+                code = generate_code_for_int8_tensor(self.shape, var_name)
+            elif dtype == paddle.int16:
+                code = generate_code_for_int16_tensor(self.shape, var_name)
+            elif dtype == paddle.uint8:
+                code = generate_code_for_uint8_tensor(self.shape, var_name)
+            elif dtype == paddle.float16:
+                code = generate_code_for_f16_tensor(self.shape, var_name)
             else:
                 code = f"{var_name}_tensor = paddle.randint({min_value},{max_value},{self.shape}, dtype={dtype})\n"
             code += f"{var_name} = {var_name}_tensor.clone(){suffix}\n"
