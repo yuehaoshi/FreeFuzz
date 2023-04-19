@@ -14,7 +14,7 @@ def generate_code_for_complex_tensor(shape, var_name, t):
 
 
 def generate_code_for_int8_tensor(shape, var_name):
-    code = f"int_tensor = paddle.randint(low=-128, high=127, shape={shape}, dtype='int32')\nint8_tensor = int_tensor.astype('int8')\n {var_name}_tensor = int8_tensor\n"
+    code = f"int_tensor = paddle.randint(low=-128, high=127, shape={shape}, dtype='int32')\nint8_tensor = int_tensor.astype('int8')\n{var_name}_tensor = int8_tensor\n"
     return code
 
 def generate_code_for_uint8_tensor(shape, var_name):
@@ -374,7 +374,7 @@ class PaddleAPI(API):
                 error_res = res
             temp_code = "try:\n"
             temp_code += API.indent_code(res_code)
-            temp_code += f"except Exception as e:\n  {error_res} = \"ERROR:\"+str(e)\n"
+            temp_code += f"except Exception as e:\n{error_res} = \"ERROR:\"+str(e)\n"
             res_code = temp_code
 
         if low_precision:
