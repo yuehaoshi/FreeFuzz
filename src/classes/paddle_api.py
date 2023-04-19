@@ -9,7 +9,7 @@ def generate_code_for_complex_tensor(shape, var_name, t):
         x = paddle.float32
     else:
         x = paddle.float64
-    code = f" real = paddle.rand({shape}, {x})\nimag = paddle.rand({shape}, {x})\n{var_name}_tensor = paddle.complex(real, imag)\n"
+    code = f"real = paddle.rand({shape}, {x})\nimag = paddle.rand({shape}, {x})\n{var_name}_tensor = paddle.complex(real, imag)\n"
     return code
 
 
