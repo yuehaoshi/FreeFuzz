@@ -9,26 +9,26 @@ def generate_code_for_complex_tensor(shape, var_name, t):
         x = paddle.float32
     else:
         x = paddle.float64
-    code = f" real = paddle.rand({shape}, {x})\n imag = paddle.rand({shape}, {x})\n {var_name}_tensor = paddle.complex(real, imag)\n"
+    code = f" real = paddle.rand({shape}, {x})\nimag = paddle.rand({shape}, {x})\n{var_name}_tensor = paddle.complex(real, imag)\n"
     return code
 
 
 def generate_code_for_int8_tensor(shape, var_name):
-    code = f"int_tensor = paddle.randint(low=-128, high=127, shape={shape}, dtype='int32')\n int8_tensor = int_tensor.astype('int8')\n {var_name}_tensor = int8_tensor\n"
+    code = f"int_tensor = paddle.randint(low=-128, high=127, shape={shape}, dtype='int32')\nint8_tensor = int_tensor.astype('int8')\n {var_name}_tensor = int8_tensor\n"
     return code
 
 def generate_code_for_uint8_tensor(shape, var_name):
-    code = f"int_tensor = paddle.randint(low=0, high=255, shape={shape}, dtype='int32')\n uint8_tensor = int_tensor.astype('uint8')\n {var_name}_tensor = uint8_tensor\n"
+    code = f"int_tensor = paddle.randint(low=0, high=255, shape={shape}, dtype='int32')\nuint8_tensor = int_tensor.astype('uint8')\n{var_name}_tensor = uint8_tensor\n"
     return code
 
 
 def generate_code_for_int16_tensor(shape, var_name):
-    code = f"int_tensor = paddle.randint(low=-32768, high=32767, shape={shape}, dtype='int32')\n int16_tensor = int_tensor.astype('int16')\n {var_name}_tensor = int16_tensor\n"
+    code = f"int_tensor = paddle.randint(low=-32768, high=32767, shape={shape}, dtype='int32')\nint16_tensor = int_tensor.astype('int16')\n{var_name}_tensor = int16_tensor\n"
     return code
 
 
 def generate_code_for_f16_tensor(shape, var_name):
-    code = f"float_tensor = paddle.rand({shape}, 'float32')\n f16_tensor = float_tensor.astype('float16')\n {var_name}_tensor = f16_tensor\n"
+    code = f"float_tensor = paddle.rand({shape}, 'float32')\nf16_tensor = float_tensor.astype('float16')\n{var_name}_tensor = f16_tensor\n"
     return code
 
 
@@ -120,7 +120,7 @@ class PaddleArgument(Argument):
             if oracle == OracleType.CUDA:
                 code += f"{var_name} = {var_name}_tensor.clone().cuda()\n"
             elif oracle == OracleType.PRECISION:
-                code += f"{var_name} = {var_name}_tensor.clone().type({self.dtype})\n"
+                code += f"{var_name} = {var_name}_tensor.clone().astype({self.dtype})\n"
         return code
 
     def mutate_value(self) -> None:
