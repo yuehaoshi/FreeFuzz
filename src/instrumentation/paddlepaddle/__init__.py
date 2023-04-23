@@ -35,7 +35,7 @@ def hijack(obj, func_name_str, mode=""):
 
 with open(__file__.replace("__init__.py", "paddle.txt"), "r") as f1:
     lines = f1.readlines()
-    # skipped = ["nn.Mish", "Tensor.Overview"]
+    #  skipped = ["nn.Mish", "Tensor.Overview"]
     for l in lines:
         l = l[len("paddle."):]
         l = l.strip()
