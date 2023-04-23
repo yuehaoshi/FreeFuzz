@@ -20,5 +20,5 @@ And it should return something similar to `.../lib64/python3.6/site-packages/pad
 (3) Configure your MongoDB in the file `write_tools.py` and then run the code where Paddlepaddle APIs are invoked  
 For example, to run all official documentation API execution examples, you should run all `.py` files in `/src/reptile/code_snippets`, where all code snippets reptiled from PaddlePaddle 2.4 version are stored). The traced dynamic execution information for each API invocation will be added to the MongoDB.  
 You can run all `.py` files in `/code_snippets` by running `cd code_snippets` and then `find . -type f -name "*.py" | xargs -I{} -n 1 sh -c 'echo "Running {}..."; python "{}"; echo "Finished {}"'`  
-(or `find . -type f -name "*.py" | sort | xargs -I{} -n 1 sh -c 'echo "Running {}..."; python "{}"; echo "Finished {}"'` if you want to run files by file name order)
+(or `find . -type f -name "*.py" | sort | xargs -I{} -n 1 sh -c 'echo "Running {}..."; python "{}"; echo "Finished {}"' > output.txt` if you want to run files by file name order and save terminal output)
 Two code snippets `script_Model_en.html_11.py` and `script_Model_en.html_12.py` were deleted because they will crush the automatic running process.
