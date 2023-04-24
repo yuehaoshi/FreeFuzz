@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"1d635824ba574e009329ca5080d94b0e","collectionName":"paddle.sparse.rad2deg","type":"collection"}

@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"6c3c3cb7ff6e480f9b72b96c351dc88e","collectionName":"paddle.amp.GradScaler","type":"collection"}

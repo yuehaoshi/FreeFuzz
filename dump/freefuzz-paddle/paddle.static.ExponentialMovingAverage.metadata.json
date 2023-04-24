@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"01e5c84084814d928465836c146e8777","collectionName":"paddle.static.ExponentialMovingAverage","type":"collection"}

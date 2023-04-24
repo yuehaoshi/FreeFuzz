@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"b7a3eb6c003c4409bcc27bcf1d61d81d","collectionName":"paddle.Tensor.gradient","type":"collection"}

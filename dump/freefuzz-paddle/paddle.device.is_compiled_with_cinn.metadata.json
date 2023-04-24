@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"d5585122e43e499aa4f596da2d2f341c","collectionName":"paddle.device.is_compiled_with_cinn","type":"collection"}

@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"2833f59f0268402da5df73bd3e02bb3b","collectionName":"paddle.nn.MultiHeadAttention","type":"collection"}

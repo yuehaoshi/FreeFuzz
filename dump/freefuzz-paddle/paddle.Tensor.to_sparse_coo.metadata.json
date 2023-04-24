@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"10491324acc2490ba13ed3b3d6dc8fef","collectionName":"paddle.Tensor.to_sparse_coo","type":"collection"}

@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"0f3bf14b9b2b4cd686b3057f6766e2b6","collectionName":"paddle.incubate.graph_sample_neighbors","type":"collection"}

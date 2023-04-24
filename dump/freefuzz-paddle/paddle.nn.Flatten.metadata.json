@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"d1c7256eb34640958e8f1ba2dae11227","collectionName":"paddle.nn.Flatten","type":"collection"}

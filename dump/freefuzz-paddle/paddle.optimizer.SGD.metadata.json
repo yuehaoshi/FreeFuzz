@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"50680e123f9241599a8e47313ff08b92","collectionName":"paddle.optimizer.SGD","type":"collection"}

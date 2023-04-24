@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"b7d9ccf96695454fb64d8558d8b1e3b4","collectionName":"paddle.nn.ClipGradByNorm","type":"collection"}
