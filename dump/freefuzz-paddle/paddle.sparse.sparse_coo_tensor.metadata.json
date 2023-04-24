@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"e4d1be25c4eb402494f08dc101726246","collectionName":"paddle.sparse.sparse_coo_tensor","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"219c26cacfcc409bb8b11978be4ad076","collectionName":"paddle.sparse.sparse_coo_tensor","type":"collection"}

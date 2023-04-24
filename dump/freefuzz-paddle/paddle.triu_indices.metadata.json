@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"e21091e7af964e9d98013a7ffc4bd343","collectionName":"paddle.triu_indices","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"e26b8b27c1e84f39abbda232fe305e3f","collectionName":"paddle.triu_indices","type":"collection"}

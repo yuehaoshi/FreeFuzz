@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"ada3e16ffa5d48f38d3de006ce83f60c","collectionName":"paddle.take_along_axis","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"f242ab57ee9140c0b7983de72f677f6a","collectionName":"paddle.take_along_axis","type":"collection"}
