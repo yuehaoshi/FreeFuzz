@@ -1,6 +1,10 @@
 import paddle
-arg_1_tensor = paddle.randint(-2048,16384,[3], dtype=paddle.int64)
+int_tensor = paddle.randint(low=-128, high=127, shape=[3], dtype='int32')
+int8_tensor = int_tensor.astype('int8')
+arg_1_tensor = int8_tensor
 arg_1 = arg_1_tensor.clone()
-arg_2_tensor = paddle.randint(-32768,8,[3], dtype=paddle.int64)
+int_tensor = paddle.randint(low=-128, high=127, shape=[3], dtype='int32')
+int8_tensor = int_tensor.astype('int8')
+arg_2_tensor = int8_tensor
 arg_2 = arg_2_tensor.clone()
 res = paddle.bitwise_xor(arg_1,arg_2,)

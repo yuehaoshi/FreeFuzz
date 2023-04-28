@@ -1,4 +1,0 @@
-import paddle
-arg_class = paddle.nn.Softplus()
-arg_1 = None
-res = arg_class(*arg_1)

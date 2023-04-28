@@ -1,3 +1,3 @@
 import paddle
-arg_1 = 1
+arg_1 = 2022
 res = paddle.seed(arg_1,)

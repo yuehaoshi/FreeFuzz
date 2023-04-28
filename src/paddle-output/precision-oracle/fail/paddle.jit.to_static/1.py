@@ -1,7 +1,7 @@
 results = dict()
 import paddle
 import time
-arg_1 = "forward"
+arg_1 = "with_common_value"
 start = time.time()
 results["time_low"] = paddle.jit.to_static(arg_1,)
 results["time_low"] = time.time() - start

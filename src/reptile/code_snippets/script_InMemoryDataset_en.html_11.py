@@ -17,4 +17,4 @@ dataset.init(
 filelist = ["a.txt", "b.txt"]
 dataset.set_filelist(filelist)
 dataset.load_into_memory()
-print dataset.get_memory_data_size()
+print(dataset.get_memory_data_size())

@@ -1,7 +1,7 @@
 results = dict()
 import paddle
 import time
-arg_1 = "builtinsbytes"
+arg_1 = "circular"
 start = time.time()
 results["time_low"] = paddle.static.deserialize_program(arg_1,)
 results["time_low"] = time.time() - start

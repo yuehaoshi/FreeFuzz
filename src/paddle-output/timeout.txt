@@ -1,1 +1,5 @@
-paddle.unique
+paddle.cumsum
+paddle.incubate.graph_sample_neighbors
+paddle.diagonal
+paddle.geometric.reindex_heter_graph
+paddle.static.load_from_file

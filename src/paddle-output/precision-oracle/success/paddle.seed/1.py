@@ -1,7 +1,7 @@
 results = dict()
 import paddle
 import time
-arg_1 = 1
+arg_1 = 2022
 start = time.time()
 results["time_low"] = paddle.seed(arg_1,)
 results["time_low"] = time.time() - start

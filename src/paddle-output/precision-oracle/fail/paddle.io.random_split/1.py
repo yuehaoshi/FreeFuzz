@@ -2,8 +2,8 @@ results = dict()
 import paddle
 import time
 arg_1 = "builtinsrange"
-arg_2_0 = 40
-arg_2_1 = 45
+arg_2_0 = True
+arg_2_1 = True
 arg_2 = [arg_2_0,arg_2_1,]
 start = time.time()
 results["time_low"] = paddle.io.random_split(arg_1,arg_2,)

@@ -1,4 +1,4 @@
 import paddle
-arg_1 = "collectionsOrderedDict"
-arg_2 = "paddle_dy.pdparams"
+arg_1 = "paddlenlp.trainer.training_argsTrainingArguments"
+arg_2 = "training_checkpoints/checkpoint-3/training_args.bin"
 res = paddle.save(arg_1,arg_2,)

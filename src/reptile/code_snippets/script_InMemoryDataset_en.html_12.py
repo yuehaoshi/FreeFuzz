@@ -19,4 +19,4 @@ filelist = ["a.txt", "b.txt"]
 dataset.set_filelist(filelist)
 dataset.load_into_memory()
 dataset.global_shuffle()
-print dataset.get_shuffle_data_size()
+print(dataset.get_shuffle_data_size())

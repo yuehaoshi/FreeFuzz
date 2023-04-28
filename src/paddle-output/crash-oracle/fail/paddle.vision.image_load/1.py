@@ -1,3 +1,3 @@
 import paddle
-arg_1 = "paddle_dy.pdparams"
+arg_1 = "temp.png"
 res = paddle.vision.image_load(arg_1,)

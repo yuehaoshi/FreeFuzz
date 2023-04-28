@@ -1,5 +1,0 @@
-import paddle
-arg_1 = "max"
-arg_class = paddle.nn.InstanceNorm1D(arg_1,)
-arg_2 = None
-res = arg_class(*arg_2)

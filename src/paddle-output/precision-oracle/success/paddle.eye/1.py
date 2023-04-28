@@ -2,7 +2,7 @@ results = dict()
 import paddle
 import time
 arg_1 = 2
-arg_2 = 16
+arg_2 = 3
 arg_3 = "int32"
 start = time.time()
 results["time_low"] = paddle.eye(arg_1,arg_2,dtype=arg_3,)
