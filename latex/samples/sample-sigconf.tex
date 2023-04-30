@@ -228,6 +228,38 @@
   \end{figure}
   
   \subsection{Mutation Test}
+
+  In this phase, We applies various mutation rules to mutate
+  the argument values traced in the second phase to generate more
+  tests for fuzzing DL libraries more thoroughly.\cite{w1}
+  \newline \textbf{Mutation Rules}. The mutation rules for FreeFuzz are composed
+  of two parts: type mutation and value mutation, shown in Tables 1
+  and 2, respectively. Type mutation strategies include Tensor Dim
+  Mutation that mutates n1-dimensional tensors to n2-dimensional
+  tensors, Tensor Dtype Mutation that mutates the data types of tensors without changing their shapes, Primitive Mutation that mutates
+  one primitive type into another, as well as Tuple Mutation and List
+  Mutation that mutate the types of elements in collections of heterogeneous objects.
+
+
+  \begin{table}[h]
+    \centering
+    \caption{Type Mutation}
+    \label{tab:freq}
+    \begin{tabular}{ccl}
+      \toprule
+      Mutation Strategies&$T_1$&$T_2$\\
+      \midrule
+      Tensor Dim Mutation & tensor<n1,DT>& tensor<n2,DT>\\
+      Tensor Dtype Mutation & tensor<n,$DT_1$>& tensor<n,$DT_2$>\\
+      Primitive Mutation & $T_1$ = int|bool|float|str & $T_2$\\
+      Tuple Mutation & $(T_i ^ {i\in 1...n})$&$(typemutate(T_i ^ {i\in 1...n}))$ \\
+      List Mutation & $[T_i ^ {i\in 1...n}]$&$[typemutate(T_i ^ {i\in 1...n})]$ \\
+    \bottomrule
+  \end{tabular}
+  \end{table}
+
+
+
   We collected different types for PaddlePaddle, which are shown in the figure3. 
   And we decide to extend the mutation strategies used in the original paper.
   To summarize, the team has selected a subset of APIs as a proof of concept to 
@@ -238,6 +270,13 @@
     \includegraphics[width=\linewidth]{4.png}
     \caption{data types in PaddlePaddle}
   \end{figure}
+
+
+
+
+
+
+
   
   \subsection{Test Oracle}
 
