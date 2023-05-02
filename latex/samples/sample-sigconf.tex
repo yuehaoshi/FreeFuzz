@@ -229,18 +229,17 @@
   
   \subsection{Mutation Test}
 
-  In this phase, We applies various mutation rules to mutate
-  the argument values traced in the second phase to generate more
-  tests for fuzzing DL libraries more thoroughly.\cite{w1}
+  In this phase, We applies various mutation rules to mutate the arguments.\cite{w1}
   \newline \textbf{Mutation Rules}. The mutation rules for FreeFuzz are composed
   of two parts: type mutation and value mutation, shown in Tables 1
   and 2, respectively. Type mutation strategies include Tensor Dim
   Mutation that mutates n1-dimensional tensors to n2-dimensional
   tensors, Tensor Dtype Mutation that mutates the data types of tensors without changing their shapes, Primitive Mutation that mutates
   one primitive type into another, as well as Tuple Mutation and List
-  Mutation that mutate the types of elements in collections of heterogeneous objects.
-
-
+  Mutation that mutate the types of elements in collections of heterogeneous objects.\cite{w1}
+  \newline Different from pytorch and tensorflow, paddle doesn't have the api to generate random complex values. Thus, the team
+  created such function which is randomizing the real part and imaginary part of complex number respectively.
+ 
   \begin{table}[h]
     \centering
     \caption{Type Mutation}
@@ -258,6 +257,23 @@
   \end{tabular}
   \end{table}
 
+  \begin{table}[h]
+    \centering
+    \caption{Value Mutation}
+    \label{tab:freq}
+    \begin{tabular}{ccl}
+      \toprule
+      Mutation Strategies&$T$&$V$\\
+      \midrule
+      Random Tensor Shape& tensor<n,DT>& tensor(shape=[randint()],dtype=DT)\\
+      Random Tensor Value& v: tensor<n,DT>& tensor(shape=v.shape,dtype=DT).rand()\\
+      Random Primitive& int|bool|float|str & rand(int|bool|float|str)\\
+      Random Complex& real + imag & rand(real) + rand(imag)\\
+      Random Tuple& $(T_i ^ {i\in 1...n})$&$(value\_mutate(T_i ^ {i\in 1...n}))$ \\
+      Random List& $[T_i ^ {i\in 1...n}]$&$[value\_mutate(T_i ^ {i\in 1...n})]$ \\
+    \bottomrule
+  \end{tabular}
+  \end{table}
 
 
   We collected different types for PaddlePaddle, which are shown in the figure3. 
