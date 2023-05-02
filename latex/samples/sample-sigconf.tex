@@ -182,9 +182,16 @@
 \maketitle
 
 \section{problem}
-\par Deep learning (DL) has become an indispensable tool for solving complex problems in various domains, including computer vision, natural language processing, and speech recognition. DL libraries, such as TensorFlow and PyTorch, are essential tools for building, optimizing, and running DL models. However, testing these libraries can be challenging due to their complexity and the lack of effective testing techniques.
-\par Testing DL systems is challenging because they typically comprise multiple layers of neural networks that perform intricate computations on large amounts of data. These computations involve non-linear transformations that are often difficult to reason about. Additionally, DL systems are commonly trained on vast datasets that are challenging to reproduce, adding to the complexity of testing.
-\par To address these challenges, researchers have proposed various techniques for testing DL systems, including mutation testing, adversarial testing, differential testing, and fuzzing. Fuzzing is a testing technique that involves generating random inputs to test software systems. It has been successfully applied to various types of software systems, including web applications, operating systems, and compilers.
+\par Deep learning (DL) has become an indispensable tool for solving complex problems in various domains, including computer vision, natural language processing, and speech recognition. 
+DL libraries, such as TensorFlow and PyTorch, are essential tools for building, optimizing, and running DL models. 
+However, testing these libraries can be challenging due to their complexity and the lack of effective testing techniques.
+
+\par Testing DL systems is challenging because they typically comprise multiple layers of neural networks that perform intricate computations on large amounts of data. 
+These computations involve non-linear transformations that are often difficult to reason about. Additionally, DL systems are commonly trained on vast datasets that are challenging to reproduce, adding to the complexity of testing.
+
+\par To address these challenges, researchers have proposed various techniques for testing DL systems, including mutation testing, adversarial testing, differential testing, and fuzzing. 
+Fuzzing is a testing technique that involves generating random inputs to test software systems. It has been successfully applied to various types of software systems, including web applications, operating systems, and compilers.
+
 \par FreeFuzz is a recent approach that utilizes open source mining to fuzz DL libraries. This automated fuzz testing tool has been effectively employed to test TensorFlow and PyTorch libraries by generating a large number of test cases from code snippets in library documentation, developer tests, and DL models in the wild. FreeFuzz uses a line coverage metric to measure its code coverage.
 \par However, testing the emerging open-source deep learning library, PaddlePaddle, using automated techniques like FreeFuzz presents challenges due to the complexity of its public APIs, which are mainly exposed in Python. The dynamic typing used in these APIs makes it challenging to automatically determine the API input parameter types. Furthermore, PaddlePaddle library has unique features and functionalities that require specific testing techniques, making it necessary to extend FreeFuzz to test this library.
 \par The project team aims to extend the existing fuzzing system to test PaddlePaddle library. The goal is to improve the reliability of these libraries by discovering and fixing potential bugs and vulnerabilities. The significance of this research lies in the fact that DL libraries play a crucial role in our daily lives, but bugs in these systems can have disastrous consequences. Surprisingly, despite the importance of DL library reliability, there is only limited work for testing DL libraries. One example of this is CRADLE, which uses pre-existing DL models to test Keras and its backends, and addresses the issue of test oracles through differential testing. To expand on this approach, LEMON enhances CRADLE by utilizing various model mutation rules to create a wider range of DL models. This enables the invocation of more library code and exposes a greater number of potential bugs in the DL library.
@@ -203,11 +210,16 @@
     \caption{Work flow of Freefuzz}
   \end{figure}
   \subsection{Code Collection}
-  \par The methodology for collecting code snippets for the PaddlePaddle framework was inspired by the FreeFuzz research paper. The team obtained code snippets from three primary sources, namely: (1) code snippets from the official documentation, (2) testing files from the PaddlePaddle library developer tests, and (3) deep learning models in the wild. The team also collected API executions of PaddlePaddle based on the same three sources.
-  \par The official website of PaddlePaddle was the primary source of code snippets, which provided all available API names, definitions, and execution examples for the latest version of the framework. To automate the process of parsing the documentation and obtaining the code snippets, the team utilized the bs4 Python package. The resulting scripts and outputs for crawling can be accessed from the \verb|/src/reptile directory|, while the API execution code snippets are available in \verb|src/reptile/code_snippets|. After filtering out invalid results from the reptile tool and several API execution codes that caused instrumentation to crash, the team obtained a total of 826 API names, 720 API definitions, and 1493 executable code snippets from the official PaddlePaddle documentation website.
-  \par The team also collected testing files from the PaddlePaddle library developer tests. There are a total of 692 testing files in the latest version of PaddlePaddle, which the team obtained by cloning the latest PaddlePaddle official repository into their local machine.
-  \par Lastly, the team obtained code from deep learning models in the wild. The team collected publicly available PaddlePaddle models and utilized them as a source of real-world use cases for testing the PaddlePaddle libraries. For instance, the PaddleNLP package, which is an easy-to-use and powerful NLP library that leverages PaddlePaddle as a basic structure, provided numerous Paddle API calls that were suitable for collecting APIs for fuzzing. The team executed all testing files for this package to augment their API pool with this package.
-  
+  The approach for collecting code snippets for the PaddlePaddle framework was inspired by the FreeFuzz research paper. 
+  The methodology involved gathering code snippets from three primary sources: (1) the official documentation, (2) testing files from the PaddlePaddle library developer tests, 
+  and (3) deep learning models in the wild. The team also collected API executions of PaddlePaddle based on the same three sources. 
+  The official website of PaddlePaddle was the primary source of code snippets, providing all available API names, definitions, and execution examples for the latest version of the framework. 
+  To automate the process of parsing the documentation and obtaining the code snippets, the team utilized the bs4 Python package. 
+  The team also collected testing files from the PaddlePaddle library developer tests in the latest version of PaddlePaddle as the second source of code collection. 
+  Lastly, the team collected publicly available PaddlePaddle models and utilized them as a source of real-world use cases for testing the PaddlePaddle libraries. 
+  For instance, the PaddleNLP package, which is an easy-to-use and powerful NLP library that leverages PaddlePaddle as a basic structure, provided numerous Paddle API calls suitable for collecting APIs for fuzzing. 
+  The team executed all testing files for this package to augment their API pool with this package.
+    
     \begin{figure}[h]
       \centering
       \includegraphics[width=\linewidth]{2.png}
@@ -215,12 +227,12 @@
     \end{figure}  
     
   \subsection{instrumentation}
-  \par The second stage of the Freefuzz adaptation process for PaddlePaddle involves dynamic tracing with instrumentation, which allows Freefuzz to intercept selected PaddlePaddle APIs and collect information about their execution, including input argument values and output values. This information is stored in MongoDB in JSON format to create the necessary type space, API value space, and argument value space for later fuzzing stages.
-  \par To implement this instrumentation stage, the team repurposed the code used for testing the PyTorch library, utilizing functions such as \verb| hijack|, \verb| decorate_class|, \verb| decorate_function|, and \verb| write_fn|. Different sources of code collection require different ways of implementing instrumentation. During the process, the team found that not all collected APIs are valid for instrumentation, and they decided to focus on fuzzing Paddle functions, keeping 511 APIs over 720 defined APIs on the Paddle official website.
-  \par For the code collected from the official documentation, the team executed all 1493 code snippets, but several code snippets could not compile during instrumentation due to typo errors on the Paddle official documentation examples. After executing all code snippets and hijacking API execution information into MongoDB, there are a total of 420 collections in MongoDB after running all code snippets, where one collection means the execution information of one API. Over 511 selected Paddle APIs, 420 APIs get executed and stored, so official documentation code snippets contributed \verb|82%| of targeted API.
-  \par For the official test code, the team cloned Paddle source code from Github and executed all \verb|test_*.py| files in Paddle/test folder using pytest as automation testing tool. After removing unsupported imports by removing invalid tests, there are 2741 tests left. After executing all 2741 tests, only one more collection shown on MongoDB, but the total size in database increased  \verb|2%|, indicating significant API execution overlap between official documentation code snippets and testing documents.
-  \par For open-source projects, the team chose the PaddleNLP package and ran testing files inside it. After executing all testing files in PaddleNLP, there are 6 more collections, and \verb|22%| more MB data increased in MongoDB, meaning that PaddleNLP contributes additional API execution data in total data. PaddleNLP focuses on a specific area of APIs and generates more in-depth API calls compared to Paddle official tests, which have a large proportion of unexecutable tests and false testing files that hamper their contribution to the total data.
-  
+  The solution for the second stage of Freefuzz adaptation process for PaddlePaddle involves dynamic tracing with instrumentation to collect information about API execution, including input argument values and output values. 
+  This information is stored in MongoDB in JSON format to create the necessary type space, API value space, and argument value space for later fuzzing stages. 
+  Different sources of code collection require different ways of implementing instrumentation. For code collected from the official documentation, the team executed all code snippets and stored information about the execution in MongoDB. 
+  For the official test code, the team cloned Paddle source code from Github and executed all $''test\_*.py''$ files in Paddle/test folder using pytest as automation testing tool. 
+  Finally, for open-source projects, the team ran testing files inside the PaddleNLP package.
+
    \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{3.png}
@@ -308,6 +320,30 @@ the team is currently engaged in an exploration of the potential application of 
 \par Currently, the team has not collected enough API and value space data, which prevents them from providing evaluation results.
  Therefore, the team is currently investigating the use of testing tools such as Lemon and Cradle, which have adapted the PaddlePaddle library 
  to compare the results of final fuzzing tests. In the next stage, the team plans to include the total number of bugs found in the evaluation results.
+\subsection{Code Collection}
+The team initially gathered code snippets from three primary sources and collected API executions of PaddlePaddle. 
+For the official documentation website, the team utilized the bs4 Python package to parse the documentation and obtain the code snippets. 
+The resulting scripts and outputs for crawling can be accessed from the /src/reptile directory, while the API execution code snippets are available in $src/reptile/code_snippets$. 
+The team filtered out invalid results from the reptile tool and several API execution codes that caused instrumentation to crash. 
+The team obtained a total of 826 API names, 720 API definitions, and 1493 executable code snippets from the official PaddlePaddle documentation website. 
+For testing files from the PaddlePaddle library developer tests, the team obtained a total of 692 testing files in the latest version of PaddlePaddle by cloning the latest PaddlePaddle official repository into their local machine. 
+For the deep learning models in the wild, the team collected publicly available PaddlePaddle models and utilized them as a source of real-world use cases for testing the PaddlePaddle libraries. 
+The team executed all testing files for the PaddleNLP package to augment their API pool with this package.
+
+\subsection{Instrumentation}
+To implement this instrumentation stage, the team repurposed the code used for testing the PyTorch library, utilizing functions such as $'hijack'$, $'decorate_class'$, $'decorate_function'$, and $'write_fn'$. 
+Different sources of code collection require different ways of implementing instrumentation. During the process, the team found that not all collected APIs are valid for instrumentation, and they decided to focus on fuzzing Paddle functions, 
+keeping 511 APIs over 720 defined APIs on the Paddle official website.
+\par For the code collected from the official documentation, the team executed all 1493 code snippets, but several code snippets could not compile during instrumentation due to typo errors on the Paddle official documentation examples. 
+After executing all code snippets and hijacking API execution information into MongoDB, there are a total of 420 collections in MongoDB after running all code snippets, where one collection means the execution information of one API. 
+Over 511 selected Paddle APIs, 420 APIs get executed and stored, so official documentation code snippets contributed 82\% of targeted API.
+\par For the official test code, the team cloned Paddle source code from Github and executed all $“test\_*.py”$ files in Paddle/test folder using pytest as automation testing tool. 
+After removing unsupported imports by removing invalid tests, there are 2741 tests left. After executing all 2741 tests, only one more collection shown on MongoDB, but the total size in database increased 2\%, 
+indicating significant API execution overlap between official documentation code snippets and testing documents.
+\par For open-source projects, the team chose the PaddleNLP package and ran testing files inside it. After executing all testing files in PaddleNLP, 
+there are 6 more collections, and 22\% more MB data increased in MongoDB, meaning that PaddleNLP contributes additional API execution data in total data. 
+PaddleNLP focuses on a specific area of APIs and generates more in-depth API calls compared to Paddle official tests, which have a large proportion of unexecutable tests and false testing files that hamper their contribution to the total data.
+
 
 \section{Result Analysis}
 
