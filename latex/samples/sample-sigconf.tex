@@ -342,6 +342,17 @@
   \textbf{Number of Covered APIs}
 
   \section{Result Analysis}
+  \subsection{Falied tests}
+  \subsection{Potential bugs}
+  \subsection{Other types of errors}
+  \subsubsection{paddle official documentation}
+  During code collection and instrumentation part, the team collected code snippets from Paddle 2.4 version 
+  official website and collected approximately 1500 code snippets. After cleaning unexecutable snippets during wrong 
+  html tag of official website, there are several official code examples that would result in compile errors. After careful inspection,
+   the team found four typos on Paddle official website examples such as redundant parenthesis and illegal syntax. 
+   The team then report those findings by opening several Paddle github issues as feedback.
+  \subsubsection{paddle official test files}
+  Import error, CMakeList compile error
 
 
 \section{Conclusions and Future Work}
