@@ -193,17 +193,20 @@
 
 
 \section{solution}
-\par To address the challenge of testing PaddlePaddle library using automated techniques like FreeFuzz, we propose extending FreeFuzz to test PaddlePaddle library using the same method mentioned in the FreeFuzz paper. More specifically, we will obtain code/models from three different sources: 1) code snippets from the library documentation, 2) library developer tests, and 3) DL models in the wild. By combining these three sources of input, we can generate a large number of test cases that cover different parts of the PaddlePaddle library.
-\par To address the challenge of dynamic typing in Python, we will use type annotations to specify the input parameter types for each API. Type annotations provide a way to specify the expected types of function arguments and return values in Python [15]. By using type annotations, we can automatically determine the API input parameter types and generate valid test cases.
-\par We will use the same line coverage metric used in the FreeFuzz paper to measure our code coverage. This metric measures the percentage of lines of code executed during testing. We will also evaluate our approach on a set of benchmark programs that use PaddlePaddle library as their backend engine.
-\par In conclusion, extending FreeFuzz to test PaddlePaddle library is an important step towards improving the quality and reliability of DL libraries. By using the same method mentioned in the FreeFuzz paper and incorporating type annotations for dynamic typing in Python, we can generate effective tests for PaddlePaddle library and improve its robustness and correctness. Furthermore, our approach can help identify and fix bugs in PaddlePaddle library, which can lead to better performance and accuracy of DL models built using this library. Our approach can also be extended to test other DL libraries that are mainly exposed in Python and have dynamic typing.
-\par Overall, our proposed approach can significantly improve the testing of DL libraries and help ensure their correctness and reliability. By generating a large number of test cases that cover different parts of the library, we can increase the code coverage and identify potential bugs or issues. This can ultimately lead to better quality DL models and more reliable applications built using these models.
+FreeFuzz performs four main steps for current DL libraries: 1) obtaining code/models from three different sources, 2) running the collected code/models with instrumentation to trace dynamic information for each covered API, 3) leveraging the traced dynamic information to perform fuzz testing for each covered API, and 4) resolving the test oracle problem with differential testing and metamorphic testing.
 
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{1.png}
-    \caption{Work flow of Freefuzz}
-  \end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{1.png}
+  \caption{Work flow of Freefuzz}
+\end{figure}
+
+To extend FreeFuzz to test PaddlePaddle library, we will follow the same four steps. We will obtain code/models from three different sources: 1) code snippets from library documentation, 2) developer tests, and 3) DL models in the wild. We will then run the collected code/models with instrumentation to trace dynamic information for each covered API. Next, we will leverage the traced dynamic information to perform fuzz testing for each covered API. Finally, we will resolve the test oracle problem with differential testing and metamorphic testing.
+
+To address the challenge of dynamic typing in Python, we will use type annotations to specify input parameter types for each API. By using type annotations, we can automatically determine API input parameter types and generate valid test cases.
+
+By following the same four steps used in FreeFuzz paper and addressing challenges specific to PaddlePaddle library such as dynamic typing in Python using type annotations, we can extend FreeFuzz to test PaddlePaddle library and improve its quality and reliability.
+  
   \subsection{Code Collection}
   \par The methodology for collecting code snippets for the PaddlePaddle framework was inspired by the FreeFuzz research paper. 
   The team obtained code snippets from three primary sources, namely: (1) code snippets from the official documentation, 
@@ -223,19 +226,20 @@
   The team executed all testing files for this package to augment their API pool with this package.
     
   \subsection{instrumentation}
-  \par The second stage of the Freefuzz adaptation process for PaddlePaddle involves dynamic tracing with instrumentation, 
+  
+
+  Instrumentation is a crucial step in FreeFuzz that enables the collection of dynamic execution information for test-input generation. 
+  To extend FreeFuzz to test PaddlePaddle library, we will perform code instrumentation using the same approach as used in the original paper.
+  The second stage of the Freefuzz adaptation process for PaddlePaddle involves dynamic tracing with instrumentation, 
   which allows Freefuzz to intercept selected PaddlePaddle APIs and collect information about their execution, 
-  including input argument values and output values. This information is stored in MongoDB in JSON format to create the necessary type space, 
+  including input argument values and output values. 
+
+  Next, we will insert additional code into this representation at specific points where an API is invoked to record its dynamic information such as name, input parameters and return value.
+  Once all covered APIs have been instrumented, we will run all collected code/models with instrumentation enabled. 
+  During execution, whenever an instrumented API is called, its dynamic information is stored in MongoDB in JSON format to create the necessary type space, 
   API value space, and argument value space for later fuzzing stages.
 
 
-  
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{3.png}
-    \caption{Database overview (left top), Database collections (left bottom), and Collection detail (right)}
-  \end{figure}
-  
   \subsection{Mutation Test}
 
   In this phase, We applies various mutation rules to mutate the arguments.\cite{w1}
@@ -326,6 +330,12 @@
   After executing all code snippets and hijacking API execution information into MongoDB, there are a total of 420 collections in MongoDB after running all code snippets, 
   where one collection means the execution information of one API. Over 511 selected Paddle APIs, 420 APIs get executed and stored, so official documentation code snippets contributed \verb|82%| of targeted API.
 
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{3.png}
+    \caption{Database overview (left top), Database collections (left bottom), and Collection detail (right)}
+  \end{figure}
+
   \par For the official test code, the team cloned Paddle source code from Github and executed all \verb|test_*.py| files in Paddle/test folder using pytest as automation testing tool. 
   After removing unsupported imports by removing invalid tests, there are 2741 tests left. After executing all 2741 tests, only one more collection shown on MongoDB, but the total size in database increased  \verb|2%|, 
   indicating significant API execution overlap between official documentation code snippets and testing documents.
@@ -340,8 +350,12 @@
   The team will use a set of metrics to evaluate the effectiveness of Freefuzz tests for PaddlePaddle. 
   These metrics include the number of covered APIs, the size of the value space, and line coverage.
   \textbf{Number of Covered APIs}
+  \newline \textbf{Size of Value Space}
+  \newline \textbf{Line Coverage}
+  \newline \textbf{Number of Detected Bugs}
 
   \section{Result Analysis}
+  \subsection{Input Source Study}
   \subsection{Falied tests}
   \subsection{Potential bugs}
   \subsection{Other types of errors}
