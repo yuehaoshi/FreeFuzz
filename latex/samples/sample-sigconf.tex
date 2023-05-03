@@ -253,7 +253,7 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   \newline Different from pytorch and tensorflow, paddle doesn't have the api to generate random complex values. Thus, the team
   created such function which is randomizing the real part and imaginary part of complex number respectively.
  
-  \begin{table}[h]
+  \begin{table*}[h]
     \centering
     \caption{Type Mutation}
     \label{tab:freq}
@@ -268,9 +268,9 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
       List Mutation & $[T_i ^ {i\in 1...n}]$&$[typemutate(T_i ^ {i\in 1...n})]$ \\
     \bottomrule
   \end{tabular}
-  \end{table}
+  \end{table*}
 
-  \begin{table}[h]
+  \begin{table*}[h]
     \centering
     \caption{Value Mutation}
     \label{tab:freq}
@@ -286,7 +286,7 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
       Random List& $[T_i ^ {i\in 1...n}]$&$[value\_mutate(T_i ^ {i\in 1...n})]$ \\
     \bottomrule
   \end{tabular}
-  \end{table}
+  \end{table*}
 
 
   We collected different types for PaddlePaddle, which are shown in the figure3. 
@@ -355,6 +355,23 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   \newline \textbf{Number of Detected Bugs}
 
   \section{Result Analysis}
+  As shown in table.\ref*{tab:freq}, we run the tests on 427 collected paddle APIs from different sources and do freefuzz tests those code.
+  \begin{table*}[t]
+    \centering
+    \caption{FreeFuzz tests on paddle api}
+    \label{tab:freq}
+    \begin{tabular}{ccccc}
+      \toprule
+      oracle&potential bug&fail&success&time-out\\
+      \midrule
+      crash-oracle & 0 & 94 & 333 &0\\
+      precision-oracle & 1&112&301 &13 \\
+      cuda-oracle(no device supported) & 0 & 0 & 0 &0\\
+    \bottomrule
+  \end{tabular}
+  \end{table*}
+
+
   \subsection{Input Source Study}
   \subsection{Falied tests}
   \subsection{Potential bugs}
