@@ -373,7 +373,12 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   meaning that PaddleNLP contributes additional API execution data in total data. PaddleNLP focuses on a specific area of APIs and generates more in-depth API calls compared to Paddle official tests, 
   which have a large proportion of unexecutable tests and false testing files that hamper their contribution to the total data.
   \newline \textbf{Mutation}.
+  We use the  Mutation Algorithm proposed in \cite{w1}. The implementation details can be
+  found in our project repository.
   \newline \textbf{Test Oracle}.
+  Due to the lack of CUDA support on MacOS, we are unable to perform CUDA testing for Paddle.
+  Since we can only run tests on CPU, we cannot do the differential testing.
+  Meanwhile, the implementation of metamorphic testing is to wrap the invocation of APIs with code for timing.\cite{w1}
   
   \subsection{Metrics}
   The team will use a set of metrics to evaluate the effectiveness of Freefuzz tests for PaddlePaddle. 
@@ -409,7 +414,8 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   In summary, our Input Source Study demonstrates that FreeFuzz is effective in generating test cases for PaddlePaddle library using different input sources such as code snippets from library documentation, developer tests and DL models in the wild. 
   However, due to large portion of deprecated tests in official test and limited resources of large Paddle project in wild, official documentation code snippets contribute the most to the total API execution data and the other two sources are unable to contribute more APIs types,
   indicating significant API execution overlap between official documentation code snippets and testing documents.
-  \subsection{Falied tests}
+  \subsection{Failed tests}
+  Among 427 api tests, 94 tests failed. majority of them are either type error or value error. It is understandable that our mutation strategies will unavoidably generate some invalid inputs.
   \subsection{Potential bugs}
   Although we only found one potential bug as shown below, it still has value for discussion.
   Let's first take a look at the criteria for judging whether the code will produce a potential bug.
