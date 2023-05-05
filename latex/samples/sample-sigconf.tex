@@ -153,12 +153,17 @@
   The article presents an extension of the FreeFuzz automated fuzz testing tool to test PaddlePaddle, 
   an emerging open-source deep learning library. The team aims to improve the reliability of deep learning 
   libraries by identifying and fixing potential bugs and vulnerabilities. The proposed solution involves 
-  four steps: code collection, instrumentation, mutation test, and oracle test. The team has completed 
-  the code collection and instrumentation stages, while the mutation stage is yet to be completed. 
-  The team has encountered challenges due to different installation settings and environments for
-   TensorFlow and PaddlePaddle packages and insufficient data collection, delaying the mutation strategy development.
-    The team plans to use metrics such as covered APIs, the size of the value space, and line coverage to evaluate the effectiveness 
-    of the Freefuzz tests for PaddlePaddle and compare them to other state-of-the-art deep learning library testing techniques.
+  four steps: code collection, instrumentation, mutation test, and oracle test. 
+
+  The team obtains code/models from three different sources: code snippets from the
+library documentation, library developer tests, and  DL models
+in the wild.
+  The team plans to use metrics such as covered APIs, the size of the value space, and line coverage to evaluate the effectiveness 
+  of the Freefuzz tests for PaddlePaddle.
+
+  The team run 427 paddle api and found one potential bug caused by paddle.pow when using the precision oracle.
+  The extensive study of FreeFuzz on paddle, a popular DL libraries, shows that FreeFuzz is able to automatically trace valid
+  dynamic information for fuzzing 427 popular APIs.
 \end{abstract}
 
 %%
@@ -488,7 +493,6 @@ which can be utilized by other researchers interested in employing the FreeFuzz 
 
 
 \section{Conclusions and Future Work}
-\subsection{Conclusions}
 \subsection{Future Work}
 In the current implementation of extending FreeFuzz to the PaddlePaddle library, several limitations exist. 
 Firstly, the team has used MacOS as the testing environment, which does not support CUDA for PaddlePaddle\cite{c1}. 
