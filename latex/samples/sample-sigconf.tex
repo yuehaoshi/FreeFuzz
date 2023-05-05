@@ -117,8 +117,7 @@
 %%
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
-\title{CS527 midterm report}
-
+\title{CS 527 SP23 Course Project \\ FreeFuzz Extension for PaddlePaddle}
 %%
 %% The "author" command and its associated commands are used to define
 %% the authors and their affiliations.
@@ -145,7 +144,7 @@
 %% other information printed in the page headers. This command allows
 %% the author to define a more concise list
 %% of authors' names for this purpose.
-\renewcommand{\shortauthors}{Trovato et al.}
+\renewcommand{\shortauthors}{Hu and Shi, et al.}
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -182,13 +181,38 @@
 \maketitle
 
 \section{problem}
-\par Deep learning (DL) has become an indispensable tool for solving complex problems in various domains, including computer vision, natural language processing, and speech recognition. DL libraries, such as TensorFlow and PyTorch, are essential tools for building, optimizing, and running DL models. However, testing these libraries can be challenging due to their complexity and the lack of effective testing techniques.
-\par Testing DL systems is challenging because they typically comprise multiple layers of neural networks that perform intricate computations on large amounts of data. These computations involve non-linear transformations that are often difficult to reason about. Additionally, DL systems are commonly trained on vast datasets that are challenging to reproduce, adding to the complexity of testing.
-\par To address these challenges, researchers have proposed various techniques for testing DL systems, including mutation testing, adversarial testing, differential testing, and fuzzing. Fuzzing is a testing technique that involves generating random inputs to test software systems. It has been successfully applied to various types of software systems, including web applications, operating systems, and compilers.
-\par FreeFuzz is a recent approach that utilizes open source mining to fuzz DL libraries. This automated fuzz testing tool has been effectively employed to test TensorFlow and PyTorch libraries by generating a large number of test cases from code snippets in library documentation, developer tests, and DL models in the wild. FreeFuzz uses a line coverage metric to measure its code coverage.
-\par However, testing the emerging open-source deep learning library, PaddlePaddle, using automated techniques like FreeFuzz presents challenges due to the complexity of its public APIs, which are mainly exposed in Python. The dynamic typing used in these APIs makes it challenging to automatically determine the API input parameter types. Furthermore, PaddlePaddle library has unique features and functionalities that require specific testing techniques, making it necessary to extend FreeFuzz to test this library.
-\par The project team aims to extend the existing fuzzing system to test PaddlePaddle library. The goal is to improve the reliability of these libraries by discovering and fixing potential bugs and vulnerabilities. The significance of this research lies in the fact that DL libraries play a crucial role in our daily lives, but bugs in these systems can have disastrous consequences. Surprisingly, despite the importance of DL library reliability, there is only limited work for testing DL libraries. One example of this is CRADLE, which uses pre-existing DL models to test Keras and its backends, and addresses the issue of test oracles through differential testing. To expand on this approach, LEMON enhances CRADLE by utilizing various model mutation rules to create a wider range of DL models. This enables the invocation of more library code and exposes a greater number of potential bugs in the DL library.
-\par In conclusion, while DL systems are complex and challenging to test using conventional techniques, fuzzing has emerged as a promising approach to testing DL libraries. FreeFuzz has been effectively used to test TensorFlow and PyTorch libraries, and extending it to test PaddlePaddle library will further enhance the reliability of DL libraries. This research contributes to improving the quality of DL libraries and reducing the likelihood of disastrous consequences caused by bugs in these systems.
+Deep learning (DL) has become an indispensable tool for solving complex problems in various domains, including computer vision\cite{p1,p2}, natural language processing\cite{p3,p4}, and software engineering\cite{p5,p6,p7,p8}. 
+As DL models become more prevalent and essential, testing their reliability has become a critical issue, particularly in safety-critical applications. 
+Many researchers have devoted significant efforts to testing DL models, mainly focusing on adversarial attacks\cite{p9,p10,p11}, testing metrics\cite{p12,p13,p14}, and specific applications\cite{p15,p16,p17}. 
+
+However, there is limited work done for testing the underlying DL libraries that are crucial for building, training, optimizing, and deploying DL models. 
+For example, for two famous DL libraries, PyTorch and TensorFlow, although existing work on testing DL libraries has shown promising results, 
+they still suffer from several limitations, such as limited sources for test input generation, limited mutation techniques, and inefficiencies in model-level testing\cite{p18,p19}. 
+
+FreeFuzz is a recent approach that utilizes open source mining to fuzz DL libraries\cite{w1}. 
+This automated fuzz testing tool has been effectively employed to test TensorFlow and PyTorch libraries by generating a large number of test cases from code snippets in library documentation, developer tests, and DL models in the wild. 
+FreeFuzz uses a line coverage metric to measure its code coverage.
+
+PaddlePaddle is an emerging open-source DL library developed by Baidu\cite{p20}.
+It is widely used in many applications, such as image classification, object detection, and natural language processing.
+PaddlePaddle is also used by many companies, including Baidu, Xiaomi, and China Mobile.
+However, there is few existing work on testing PaddlePaddle library. To solve this problem, the project team aims to extend the existing fuzzing system to test PaddlePaddle library. 
+The goal is to improve the reliability of PaddlePaddle library by discovering and fixing potential bugs and vulnerabilities. 
+ 
+In summary, our paper makes the following contributions:
+\newline\textbf{Dimension}. This paper opens a new dimension for fully
+automated API-level fuzzing of DL libraries via mining from
+actual code and model executions in the wild.
+\newline\textbf{Technique}. We implement a practical API-level DL library
+fuzzing technique, FreeFuzz, which leverages three different
+input sources, including code snippets from library documentation, library developer tests, and DL models in the
+wild. FreeFuzz traces the dynamic API invocation information of all input sources via code instrumentation for fuzz
+testing. FreeFuzz also resolves the test oracle problem with
+differential testing and metamorphic testing.
+\newline\textbf{Study}. Our extensive study on the two most popular DL
+libraries, PyTorch and TensorFlow, shows that FreeFuzz can
+successfully trace 1158 out of 2530 APIs, and effectively detect 49 bugs, with 38 already confirmed by developers as
+previously unknown, and 21 already fixed.
 
 
 
@@ -302,7 +326,12 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
 
 
   \subsection{Test Oracle}
+  The original Freefuzz paper proposed leveraging multiple execution modes during the instrumentation process to detect wrong-computation results. 
+  By comparing the results obtained from different execution modes, potential DL library bugs can be detected. However, due to having only MacOS, 
+  on which Paddle does not support CUDA, the team was unable to perform CUDA testing for Paddle.
 
+  Therefore, the team focused on detecting crash bugs and performance bugs by employing mutation-based fuzzing techniques that modify existing inputs, modify data type, and generate new inputs from scratch. 
+  By modifying existing inputs in various ways, FreeFuzz can identify performance issues and crash bugs that traditional unit tests may have missed.
 
 \section{Evaluation}
   \subsection{Implementation}
@@ -373,6 +402,13 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
 
 
   \subsection{Input Source Study}
+  The team evaluated the effectiveness of FreeFuzz for testing PaddlePaddle library by analyzing different input sources. We explored three different sources: 1) code snippets from library documentation, 2) developer tests, and 3) DL models in the wild.
+
+  Our results showed that FreeFuzz was able to automatically trace valid dynamic information for fuzzing 427 popular APIs using each input source individually, including 420 from official documentation, 1 from official tests, and 6 from wild project such as PaddleNLP.
+
+  In summary, our Input Source Study demonstrates that FreeFuzz is effective in generating test cases for PaddlePaddle library using different input sources such as code snippets from library documentation, developer tests and DL models in the wild. 
+  However, due to large portion of deprecated tests in official test and limited resources of large Paddle project in wild, official documentation code snippets contribute the most to the total API execution data and the other two sources are unable to contribute more APIs types,
+  indicating significant API execution overlap between official documentation code snippets and testing documents.
   \subsection{Falied tests}
   \subsection{Potential bugs}
   \subsection{Other types of errors}
@@ -383,7 +419,12 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
    the team found four typos on Paddle official website examples such as redundant parenthesis and illegal syntax. 
    The team then report those findings by opening several Paddle github issues as feedback.
   \subsubsection{paddle official test files}
-  Import error, CMakeList compile error
+  To execute all official test files, the team initially cloned the Paddle source code from Github. They attempted to execute all testing files using the CMakeList file provided in the testing folder, but they encountered several compile errors during the process. After conducting a thorough examination, the team discovered incompatibility issues between the CMakeList file and the current operating system. Consequently, they opted to employ pytest as an automation testing tool to execute all testing files. During the pytest process, hundreds of import errors arose due to deprecated APIs and invalid tests.
+
+  Following the removal of unsupported imports by eliminating invalid tests, only 2741 tests remained, but a majority of them generated failure results. The considerable proportion of unexecutable and failed tests impeded their contribution to the overall data. Based on the instrumentation process of the project, the team discovered several compile errors during the process. After careful inspection, the team found several incompatibility issues between the CMakeList file and the current operating system.
+
+  Therefore, the team suggests that the Paddle development team should better maintain the testing files to prevent compile errors and import errors during the testing process. Additionally, they recommend providing instructions on the testing files regarding the prerequisites for executing them on various systems, if possible.
+  
 
 
 \section{Conclusions and Future Work}
@@ -392,10 +433,69 @@ In general, the team has made good progress towards achieving the midterm goals 
 \par The third stage of Freefuzz involves mutation-based fuzzing, where FreeFuzz will generate mutants for the test inputs collected from stage 2. At this point, the team has not developed a mutation strategy but plans to implement type mutation, random value mutation, and database value mutation in the next phase of work. The fourth stage entails running all the generated tests with oracles. Currently, with the collected unmutated API values, there have been no crash or runtime error outputs, which is as expected. In the next phase, the team plans to run the mutated code and generate more oracles to try to find bugs in the PaddlePaddle packages.
 \par Finally, the team will evaluate the effectiveness of the Freefuzz testing methodology by measuring the number of covered APIs, the size of the value space, and line coverage. Additionally, they will compare the Freefuzz testing metrics with those of LEMON and CRADLE.
 With the successful setup of the development environment and a deeper understanding of Freefuzz, the team is confident that they can complete one functionality in each paragraph mentioned above each week before the final deadline and complete the project on time.
+CUDA
+Only run several times
+Lack of wild projects
 
 \section{github link}
 https://github.com/yuehaoshi/FreeFuzz
 \begin{thebibliography}{9}
+\bibitem{p1} K. He, X. Zhang, S. Ren, and J. Sun. Deep Residual Learning for Image Recognition.
+In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition
+(CVPR), June 2016.
+\bibitem{p2} K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale
+image recognition. arXiv preprint arXiv:1409.1556, 2014.
+\bibitem{p3} F. A. Gers, J. Schmidhuber, and F. Cummins. Learning to forget: Continual
+prediction with lstm. Neural computation, 12(10):2451–2471, 2000.
+\bibitem{p4} A. Graves, A.-r. Mohamed, and G. Hinton. Speech recognition with deep recurrent
+neural networks. In 2013 IEEE international conference on acoustics, speech and
+signal processing, pages 6645–6649. Ieee, 2013.
+\bibitem{p5} J. Chen, H. Ma, and L. Zhang. Enhanced compiler bug isolation via memoized
+search. In Proceedings of the 35th IEEE/ACM International Conference on Automated
+Software Engineering, pages 78–89, 2020.
+\bibitem{p6} X. Li, W. Li, Y. Zhang, and L. Zhang. Deepfl: Integrating multiple fault diagnosis
+dimensions for deep fault localization. In Proceedings of the 28th ACM SIGSOFT
+International Symposium on Software Testing and Analysis, pages 169–180, 2019.
+\bibitem{p7} Y. Yang, X. Xia, D. Lo, and J. Grundy. A survey on deep learning for software
+engineering. arXiv preprint arXiv:2011.14597, 2020.
+\bibitem{p8} Z. Zeng, Y. Zhang, H. Zhang, and L. Zhang. Deep just-in-time defect prediction:
+how far are we? In Proceedings of the 30th ACM SIGSOFT International Symposium
+on Software Testing and Analysis, pages 427–438, 2021.
+\bibitem{p9} N. Akhtar and A. Mian. Threat of adversarial attacks on deep learning in computer
+vision: A survey. Ieee Access, 6:14410–14430, 2018.
+\bibitem{p10} N. Carlini, A. Athalye, N. Papernot, W. Brendel, J. Rauber, D. Tsipras, I. Goodfellow,
+A. Madry, and A. Kurakin. On evaluating adversarial robustness. arXiv preprint
+arXiv:1902.06705, 2019
+\bibitem{p11} I. J. Goodfellow, J. Shlens, and C. Szegedy. Explaining and harnessing adversarial
+examples. arXiv preprint arXiv:1412.6572, 2014.
+\bibitem{p12} F. Harel-Canada, L. Wang, M. A. Gulzar, Q. Gu, and M. Kim. Is neuron coverage a
+meaningful measure for testing deep neural networks? In Proceedings of the 28th
+ACM Joint Meeting on European Software Engineering Conference and Symposium
+on the Foundations of Software Engineering, pages 851–862, 2020.
+\bibitem{p13} J. Kim, R. Feldt, and S. Yoo. Guiding deep learning system testing using surprise
+adequacy. In 2019 IEEE/ACM 41st International Conference on Software Engineering
+(ICSE), pages 1039–1049. IEEE, 2019.
+\bibitem{p14} L. Ma, F. Juefei-Xu, F. Zhang, J. Sun, M. Xue, B. Li, C. Chen, T. Su, L. Li, Y. Liu,
+et al. Deepgauge: Multi-granularity testing criteria for deep learning systems. In
+Proceedings of the 33rd ACM/IEEE International Conference on Automated Software
+Engineering, pages 120–131, 2018.
+\bibitem{p15} Y. Tian, K. Pei, S. Jana, and B. Ray. Deeptest: Automated testing of deep-neuralnetwork-driven autonomous cars. In Proceedings of the 40th international conference on software engineering, pages 303–314, 2018.
+\bibitem{p16} M. Zhang, Y. Zhang, L. Zhang, C. Liu, and S. Khurshid. Deeproad: Gan-based
+metamorphic testing and input validation framework for autonomous driving
+systems. In 2018 33rd IEEE/ACM International Conference on Automated Software
+Engineering (ASE), pages 132–142. IEEE, 2018.
+\bibitem{p17} H. Zhou, W. Li, Z. Kong, J. Guo, Y. Zhang, B. Yu, L. Zhang, and C. Liu. Deepbillboard: Systematic physical-world testing of autonomous driving systems. In 2020
+IEEE/ACM 42nd International Conference on Software Engineering (ICSE), pages
+347–358. IEEE, 2020.
+\bibitem{p18} H. V. Pham, T. Lutellier, W. Qi, and L. Tan. CRADLE: Cross-Backend Validation
+to Detect and Localize Bugs in Deep Learning Libraries. In 2019 IEEE/ACM 41st
+International Conference on Software Engineering (ICSE), pages 1027–1038, 2019.
+\bibitem{p19} Z. Wang, M. Yan, J. Chen, S. Liu, and D. Zhang. Deep learning library testing
+via effective model generation. In Proceedings of the 28th ACM Joint Meeting on
+European Software Engineering Conference and Symposium on the Foundations of
+Software Engineering, pages 788–799, 2020.
+\bibitem{p20} Ma, Y., Yu, D., Wu, T. and Wang, H., 2019. PaddlePaddle: An open-source deep learning platform from industrial practice. Frontiers of Data and Domputing, 1(1), pp.105-115.
+
 \bibitem{w1} Wei, A., Deng, Y., Yang, C.,  Zhang, L. (2022, May). Free lunch for testing: Fuzzing deep-learning libraries from open source. In Proceedings of the 44th International Conference on Software Engineering (pp. 995-1007).
 \end{thebibliography}
 \end{document} 
