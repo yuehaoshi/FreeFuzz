@@ -200,19 +200,14 @@ However, there is few existing work on testing PaddlePaddle library. To solve th
 The goal is to improve the reliability of PaddlePaddle library by discovering and fixing potential bugs and vulnerabilities. 
  
 In summary, our paper makes the following contributions:
-\newline\textbf{Dimension}. This paper opens a new dimension for fully
-automated API-level fuzzing of DL libraries via mining from
-actual code and model executions in the wild.
-\newline\textbf{Technique}. We implement a practical API-level DL library
-fuzzing technique, FreeFuzz, which leverages three different
-input sources, including code snippets from library documentation, library developer tests, and DL models in the
-wild. FreeFuzz traces the dynamic API invocation information of all input sources via code instrumentation for fuzz
-testing. FreeFuzz also resolves the test oracle problem with
-differential testing and metamorphic testing.
-\newline\textbf{Study}. Our extensive study on the two most popular DL
-libraries, PyTorch and TensorFlow, shows that FreeFuzz can
-successfully trace 1158 out of 2530 APIs, and effectively detect 49 bugs, with 38 already confirmed by developers as
-previously unknown, and 21 already fixed.
+\newline\textbf{Dimension}.  Our study introduces a novel dimension for carrying out fully automated fuzzing of PaddlePaddle library at the API level by extending FreeFuzz methodology. 
+This is accomplished by mining data from real code and model executions in the wild.
+\newline\textbf{Technique}. We have adapted the effective fuzzing technique, FreeFuzz, for use in performing fuzzing tests on the PaddlePaddle library. 
+Our technique leverages three distinct input sources: code snippets from the library's documentation, developer tests, and deep learning (DL) models in the wild. 
+Code instrumentation is utilized for fuzz testing, which enables FreeFuzz to trace the dynamic invocation information of APIs from all input sources. 
+Additionally, FreeFuzz employs metamorphic testing to address the test oracle problem. Throughout the fuzzing process, we provided detailed documentation and publicly shared our code, 
+which can be utilized by other researchers interested in employing the FreeFuzz methodology to test the PaddlePaddle library.
+\newline\textbf{Study}. Our extensive study on PaddlePaddle library shows that FreeFuzz can successfully trace 511 out of 720 APIs.
 
 
 
@@ -225,26 +220,33 @@ FreeFuzz performs four main steps for current DL libraries: 1) obtaining code/mo
   \caption{Work flow of Freefuzz}
 \end{figure}
 
-To extend FreeFuzz to test PaddlePaddle library, we will follow the same four steps. We will obtain code/models from three different sources: 1) code snippets from library documentation, 2) developer tests, and 3) DL models in the wild. We will then run the collected code/models with instrumentation to trace dynamic information for each covered API. Next, we will leverage the traced dynamic information to perform fuzz testing for each covered API. Finally, we will resolve the test oracle problem with differential testing and metamorphic testing.
+To extend FreeFuzz to test PaddlePaddle library, we will follow the same four steps. 
+We will obtain code/models from three different sources: 1) code snippets from library documentation, 2) developer tests, and 3) DL models in the wild. 
+We will then run the collected code/models with instrumentation to trace dynamic information for each covered API. 
+Next, we will leverage the traced dynamic information to perform fuzz testing for each covered API. 
+Finally, we will resolve the test oracle problem with differential testing and metamorphic testing.
 
-To address the challenge of dynamic typing in Python, we will use type annotations to specify input parameter types for each API. By using type annotations, we can automatically determine API input parameter types and generate valid test cases.
+To address the challenge of dynamic typing in Python, we will use type annotations to specify input parameter types for each API. 
+By using type annotations, we can automatically determine API input parameter types and generate valid test cases.
 
-By following the same four steps used in FreeFuzz paper and addressing challenges specific to PaddlePaddle library such as dynamic typing in Python using type annotations, we can extend FreeFuzz to test PaddlePaddle library and improve its quality and reliability.
+By following the same four steps used in FreeFuzz paper and addressing challenges specific to PaddlePaddle library such as dynamic typing in Python using type annotations, 
+we can extend FreeFuzz to test PaddlePaddle library and improve its quality and reliability. Additionally, we provided detailed documentation and publicly shared our code on Github (\href{https://github.com/yuehaoshi/FreeFuzz}{https://github.com/yuehaoshi/FreeFuzz}), 
+which can be utilized by other researchers interested in employing the FreeFuzz methodology to test the PaddlePaddle library.
   
   \subsection{Code Collection}
-  \par The methodology for collecting code snippets for the PaddlePaddle framework was inspired by the FreeFuzz research paper. 
+  The methodology for collecting code snippets for the PaddlePaddle framework was inspired by the FreeFuzz research paper. 
   The team obtained code snippets from three primary sources, namely: (1) code snippets from the official documentation, 
   (2) testing files from the PaddlePaddle library developer tests, and (3) deep learning models in the wild. 
   The team also collected API executions of PaddlePaddle based on the same three sources.
 
-  \par The official website of PaddlePaddle was the primary source of code snippets, which provided all available API names, 
+  The official website of PaddlePaddle was the primary source of code snippets, which provided all available API names, 
   definitions, and execution examples for the latest version of the framework. To automate the process of parsing the documentation and obtaining the code snippets, 
   the team utilized the bs4 Python package. 
 
-  \par The team also collected testing files from the PaddlePaddle library developer tests. 
+  The team also collected testing files from the PaddlePaddle library developer tests. 
   There are a total of 692 testing files in the latest version of PaddlePaddle, which the team obtained by cloning the latest PaddlePaddle official repository into their local machine.
 
-  \par Lastly, the team obtained code from deep learning models in the wild. 
+  Lastly, the team obtained code from deep learning models in the wild. 
   The team collected publicly available PaddlePaddle models and utilized them as a source of real-world use cases for testing the PaddlePaddle libraries. 
   For instance, the PaddleNLP package, which is an easy-to-use and powerful NLP library that leverages PaddlePaddle as a basic structure, provided numerous Paddle API calls that were suitable for collecting APIs for fuzzing. 
   The team executed all testing files for this package to augment their API pool with this package.
@@ -318,12 +320,6 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   To summarize, the team has selected a subset of APIs as a proof of concept to 
   demonstrate the feasibility of applying the complete Freefuzz testing process to the PaddlePaddle package, 
   as set out in the midterm goals.
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{4.png}
-    \caption{data types in PaddlePaddle}
-  \end{figure}
-
 
   \subsection{Test Oracle}
   The original Freefuzz paper proposed leveraging multiple execution modes during the instrumentation process to detect wrong-computation results. 
@@ -357,7 +353,7 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   
   \par For the code collected from the official documentation, the team executed all 1493 code snippets, but several code snippets could not compile during instrumentation due to typo errors on the Paddle official documentation examples. 
   After executing all code snippets and hijacking API execution information into MongoDB, there are a total of 420 collections in MongoDB after running all code snippets, 
-  where one collection means the execution information of one API. Over 511 selected Paddle APIs, 420 APIs get executed and stored, so official documentation code snippets contributed \verb|82%| of targeted API.
+  where one collection means the execution information of one API.
 
   \begin{figure}[h]
     \centering
@@ -383,10 +379,21 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   \subsection{Metrics}
   The team will use a set of metrics to evaluate the effectiveness of Freefuzz tests for PaddlePaddle. 
   These metrics include the number of covered APIs, the size of the value space, and line coverage.
-  \textbf{Number of Covered APIs}
-  \newline \textbf{Size of Value Space}
-  \newline \textbf{Line Coverage}
-  \newline \textbf{Number of Detected Bugs}
+  \textbf{Number of Covered APIs.} Given the extensive range of APIs available in DL libraries, it is essential to demonstrate the total number of APIs covered as a critical indicator of the thoroughness of testing.
+  
+  \textbf{Size of Value Space.} Each API invocation will create a new entry in the API value space. 
+  Thus, we utilize the total size of the value space for all APIs as a metric to compare and analyze different input sources. 
+  In this project, we count the total amount of data size in the API value space, excluding any duplicates. 
+  It is important to note that this metric is primarily used to illustrate the scale of the traced data and should not be considered as a measure of fuzzing effectiveness.
+  
+  \textbf{Line Coverage.} Code coverage is widely recognized as a crucial metric for evaluating the effectiveness of a test suite and its ability to provide thorough testing. 
+  As part of this project, our aim was to use line coverage as a metric to assess the effectiveness of Freefuzz tests for PaddlePaddle. 
+  To do this, we utilized the python coverage package during the instrumentation process. 
+  Unfortunately, we encountered some issues that prevented us from obtaining reliable line coverage metrics. 
+  As a result, we shifted our focus towards analyzing input source metrics and identifying failures and bugs.
+
+  \textbf{Number of Detected Bugs.} The effectiveness of Freefuzz tests for PaddlePaddle will be evaluated by the team based on the number of bugs detected, 
+  such as potential bugs, the ratio of failures to successes, and any other bugs that may be discovered during the project implementation process.
 
   \section{Result Analysis}
   As shown in table.\ref*{tab:freq}, we run the tests on 427 collected paddle APIs from different sources and do freefuzz tests those code.
@@ -411,7 +418,15 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
 
   Our results showed that FreeFuzz was able to automatically trace valid dynamic information for fuzzing 427 popular APIs using each input source individually, including 420 from official documentation, 1 from official tests, and 6 from wild project such as PaddleNLP.
 
+  As for the size of the value space, we found that the official documentation code snippets contributed the most to the total API execution data, with 80\% of the total data, followed by the wild project PaddleNLP with 18\% of the total data, and the official tests with 1.7\% of the total data.
   In summary, our Input Source Study demonstrates that FreeFuzz is effective in generating test cases for PaddlePaddle library using different input sources such as code snippets from library documentation, developer tests and DL models in the wild. 
+  
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{APIDist.png}
+    \caption{API Value Size and API Number distribution from different sources}
+  \end{figure}
+
   However, due to large portion of deprecated tests in official test and limited resources of large Paddle project in wild, official documentation code snippets contribute the most to the total API execution data and the other two sources are unable to contribute more APIs types,
   indicating significant API execution overlap between official documentation code snippets and testing documents.
   \subsection{Failed tests}
@@ -455,30 +470,38 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   \subsubsection{paddle official documentation}
   During code collection and instrumentation part, the team collected code snippets from Paddle 2.4 version 
   official website and collected approximately 1500 code snippets. After cleaning unexecutable snippets during wrong 
-  html tag of official website, there are several official code examples that would result in compile errors. After careful inspection,
-   the team found four typos on Paddle official website examples such as redundant parenthesis and illegal syntax. 
-   The team then report those findings by opening several Paddle github issues as feedback.
+  html tag of official website, there are several official code examples that would result in compile errors. After careful inspection, 
+  the team found four typos on Paddle official website examples such as redundant parenthesis and illegal syntax. 
+  The team then report those findings by opening several Paddle github issues as feedback\cite{r1, r2}.
   \subsubsection{paddle official test files}
-  To execute all official test files, the team initially cloned the Paddle source code from Github. They attempted to execute all testing files using the CMakeList file provided in the testing folder, but they encountered several compile errors during the process. After conducting a thorough examination, the team discovered incompatibility issues between the CMakeList file and the current operating system. Consequently, they opted to employ pytest as an automation testing tool to execute all testing files. During the pytest process, hundreds of import errors arose due to deprecated APIs and invalid tests.
+  To execute all official test files, the team initially cloned the Paddle source code from Github. They attempted to execute all testing files using the CMakeList file provided in the testing folder, 
+  but encountered several compile errors during the process. After conducting a thorough examination, the team discovered incompatibility issues between the CMakeList file and the current operating system. 
+  Consequently, the team opted to employ pytest as an automation testing tool to execute all testing files. During the pytest process, hundreds of import errors arose due to deprecated APIs and invalid tests.
 
-  Following the removal of unsupported imports by eliminating invalid tests, only 2741 tests remained, but a majority of them generated failure results. The considerable proportion of unexecutable and failed tests impeded their contribution to the overall data. Based on the instrumentation process of the project, the team discovered several compile errors during the process. After careful inspection, the team found several incompatibility issues between the CMakeList file and the current operating system.
+  Following the removal of unsupported imports by eliminating invalid tests, only 2741 tests remained, but a majority of them generated failure results. 
+  The considerable proportion of unexecutable and failed tests impeded their contribution to the overall data. Based on the instrumentation process of the project, the team discovered several compile errors during the process. 
+  After careful inspection, the team found several incompatibility issues between the CMakeList file and the current operating system.
 
-  Therefore, the team suggests that the Paddle development team should better maintain the testing files to prevent compile errors and import errors during the testing process. Additionally, they recommend providing instructions on the testing files regarding the prerequisites for executing them on various systems, if possible.
+  Therefore, the team suggests that the Paddle development team should better maintain the testing files to prevent compile errors and import errors during the testing process. 
+  Additionally, they recommend providing instructions on the testing files regarding the prerequisites for executing them on various systems, if possible.
   
 
 
 \section{Conclusions and Future Work}
-In general, the team has made good progress towards achieving the midterm goals except for the mutation strategy script in stage 3. However, the team encountered some challenges that slowed down the development process. One of the team members was using a MacOS device with an M1 chip, which required different installation settings and environments for TensorFlow and PaddlePaddle packages compared to general MacOS installation instructions. This unexpected issue took some time for the team to resolve. Additionally, developing a mutation strategy was challenging without sufficient data collection from stage 1. As a result, the team has decided to postpone the development of this part until stage 1 is almost complete.
-\par As previously mentioned, the team used a limited number of PaddlePaddle APIs in the midterm to initiate the project. To increase the sample size, the team is currently developing Python crawler scripts to collect additional APIs from official documentation, test documents, and open source projects.
-\par The third stage of Freefuzz involves mutation-based fuzzing, where FreeFuzz will generate mutants for the test inputs collected from stage 2. At this point, the team has not developed a mutation strategy but plans to implement type mutation, random value mutation, and database value mutation in the next phase of work. The fourth stage entails running all the generated tests with oracles. Currently, with the collected unmutated API values, there have been no crash or runtime error outputs, which is as expected. In the next phase, the team plans to run the mutated code and generate more oracles to try to find bugs in the PaddlePaddle packages.
-\par Finally, the team will evaluate the effectiveness of the Freefuzz testing methodology by measuring the number of covered APIs, the size of the value space, and line coverage. Additionally, they will compare the Freefuzz testing metrics with those of LEMON and CRADLE.
-With the successful setup of the development environment and a deeper understanding of Freefuzz, the team is confident that they can complete one functionality in each paragraph mentioned above each week before the final deadline and complete the project on time.
-CUDA
-Only run several times
-Lack of wild projects
+\subsection{Conclusions}
+\subsection{Future Work}
+In the current implementation of extending FreeFuzz to the PaddlePaddle library, several limitations exist. 
+Firstly, the team has used MacOS as the testing environment, which does not support CUDA for PaddlePaddle\cite{c1}. 
+Consequently, testing of CUDA related APIs in PaddlePaddle is not possible. 
+To test CUDA related APIs, future developers are advised to use an operating system other than MacOS as the testing environment.
 
-\section{github link}
-https://github.com/yuehaoshi/FreeFuzz
+Secondly, due to limited time and resources, the team conducted the fuzzing process only a few times, 
+resulting in the discovery of only one potential bug. 
+To increase the probability of finding potential bugs, it is recommended that future developers run the fuzzing process multiple times.
+
+Finally, the team only used PaddleNLP as the wild project to test FreeFuzz. 
+To improve the robustness of FreeFuzz, future developers are encouraged to use multiple wild projects for testing purposes.
+
 \begin{thebibliography}{9}
 \bibitem{p1} K. He, X. Zhang, S. Ren, and J. Sun. Deep Residual Learning for Image Recognition.
 In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition
@@ -537,6 +560,10 @@ Software Engineering, pages 788–799, 2020.
 \bibitem{p20} Ma, Y., Yu, D., Wu, T. and Wang, H., 2019. PaddlePaddle: An open-source deep learning platform from industrial practice. Frontiers of Data and Domputing, 1(1), pp.105-115.
 
 \bibitem{w1} Wei, A., Deng, Y., Yang, C.,  Zhang, L. (2022, May). Free lunch for testing: Fuzzing deep-learning libraries from open source. In Proceedings of the 44th International Conference on Software Engineering (pp. 995-1007).
+\bibitem{c1} PaddlePaddle. \textit{Installation Guide}. PaddlePaddle. Accessed May 4, 2023. \url{https://www.paddlepaddle.org.cn/documentation/docs/en/install/index_en.html}.
+\bibitem{r1} PaddlePaddle, GitHub. Issue 53437, https://github.com/PaddlePaddle/Paddle/issues/53437, Accessed May 4, 2023.
+\bibitem{r2} PaddlePaddle, GitHub. Issue 53437, https://github.com/PaddlePaddle/Paddle/issues/53438, Accessed May 4, 2023.
+
 \end{thebibliography}
 \end{document} 
 \endinput
