@@ -46,7 +46,7 @@
 %%
 %%
 \documentclass[sigconf]{acmart}
-
+\usepackage{listings}
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -411,6 +411,40 @@ By following the same four steps used in FreeFuzz paper and addressing challenge
   indicating significant API execution overlap between official documentation code snippets and testing documents.
   \subsection{Falied tests}
   \subsection{Potential bugs}
+  Although we only found one potential bug as shown below, it still has value for discussion.
+  Let's first take a look at the criteria for judging whether the code will produce a potential bug.
+  For precision oracle, we run two tests for one specific api. According to \cite{w1}, we have this fact when 
+  we run the tests on hardware M.
+  \begin{equation}
+    \begin{aligned}
+      & precision(DT1) < precision(DT2) \Rightarrow cost(M, API_I, args, tensor \langle n, DT1 \rangle) \\
+      & < cost(M, API_I, args, tensor \langle n, DT2 \rangle)
+    \end{aligned}
+  \end{equation}
+  Thus, when time of tests on low precision datatype is 10 times longer then the time of tests on high precision datatype, we will report a potential bug. 
+  In this case, low time value is 0.03082s while high time value is 0.001367s. Obviously, low time is 22.5 times longer than high time, which is larger than 10 times.
+  However, due to the limitation of time, we have not found the intrinsic reason for this result. Thus, we can not confirm whether this is a real bug or not.
+    
+  
+  \begin{lstlisting}[language=Python, numbers=left, caption={Potential bug when excuting precision oracle}, label={lst:potential_bug}]
+  import paddle
+  import time
+  results = dict()
+  arg_1_tensor = paddle.rand([1], dtype=paddle.float32)
+  arg_1 = arg_1_tensor.clone()
+  arg_2 = 4.0
+  start = time.time()
+  results["time_low"] = paddle.pow(arg_1,arg_2,)
+  results["time_low"] = time.time() - start
+  arg_1 = arg_1_tensor.clone().astype(paddle.float32)
+  start = time.time()
+  results["time_high"] = paddle.pow(arg_1,arg_2,)
+  results["time_high"] = time.time() - start
+\end{lstlisting}
+
+
+
+
   \subsection{Other types of errors}
   \subsubsection{paddle official documentation}
   During code collection and instrumentation part, the team collected code snippets from Paddle 2.4 version 
