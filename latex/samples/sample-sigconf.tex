@@ -155,15 +155,18 @@
   libraries by identifying and fixing potential bugs and vulnerabilities. The proposed solution involves 
   four steps: code collection, instrumentation, mutation test, and oracle test. 
 
-  The team obtains code/models from three different sources: code snippets from the
-library documentation, library developer tests, and  DL models
-in the wild.
+To collect code snippets for our fuzz testing, we leveraged three distinct input sources: code snippets from the library's documentation, developer tests, and deep learning models in the wild. 
+We then utilized code instrumentation for fuzz testing, which enabled FreeFuzz to trace the dynamic invocation information of APIs from all input sources. 
+Additionally, we employed metamorphic testing to address the test oracle problem.
+
   The team plans to use metrics such as covered APIs, the size of the value space, and line coverage to evaluate the effectiveness 
-  of the Freefuzz tests for PaddlePaddle.
+  of the Freefuzz tests for PaddlePaddle. However, due to the limit of time, we failed to implement the code for evaluating the line coverage of our tests.
 
   The team run 427 paddle api and found one potential bug caused by paddle.pow when using the precision oracle.
   The extensive study of FreeFuzz on paddle, a popular DL libraries, shows that FreeFuzz is able to automatically trace valid
-  dynamic information for fuzzing 427 popular APIs.
+  dynamic information for fuzzing 427 popular APIs. 
+
+  Overall, our work demonstrates a promising approach of FreeFuzz to improving the reliability of deep learning libraries through automated fuzz testing. We believe that our methodology can be applied more broadly to other deep learning libraries and software systems beyond PaddlePaddle.
 \end{abstract}
 
 %%
@@ -320,8 +323,7 @@ which can be utilized by other researchers interested in employing the FreeFuzz 
   \end{table*}
 
 
-  We collected different types for PaddlePaddle, which are shown in the figure3. 
-  And we decide to extend the mutation strategies used in the original paper.
+  We collected different types for PaddlePaddle, and decide to extend the mutation strategies used in the original paper.
   To summarize, the team has selected a subset of APIs as a proof of concept to 
   demonstrate the feasibility of applying the complete Freefuzz testing process to the PaddlePaddle package, 
   as set out in the midterm goals.
@@ -345,12 +347,6 @@ which can be utilized by other researchers interested in employing the FreeFuzz 
   After removing unsupported imports by removing invalid tests, there are 2741 tests left. After executing all 2741 tests, only one more collection shown on MongoDB, 
   but the total size in database increased  \verb|2%|, indicating significant API execution overlap between official documentation code snippets and testing documents.
   For wild Paddle project source, the team collected PaddleNLP package and ran testing files inside it.
-  
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{2.png}
-    \caption{Code snippets list (left), code snippet detail (right top), and code snippet origin (right bottom)}
-  \end{figure}  
 
   \textbf{Instrumentation}. To implement this instrumentation stage, the team repurposed the code used for testing the PyTorch library, 
   utilizing functions such as \verb| hijack|, \verb| decorate_class|, \verb| decorate_function|, and \verb| write_fn|. Different sources of code collection require different ways of implementing instrumentation. 
@@ -425,7 +421,7 @@ which can be utilized by other researchers interested in employing the FreeFuzz 
 
   As for the size of the value space, we found that the official documentation code snippets contributed the most to the total API execution data, with 80\% of the total data, followed by the wild project PaddleNLP with 18\% of the total data, and the official tests with 1.7\% of the total data.
   In summary, our Input Source Study demonstrates that FreeFuzz is effective in generating test cases for PaddlePaddle library using different input sources such as code snippets from library documentation, developer tests and DL models in the wild. 
-  
+  The proportion of API value size and API number distribution from different sources are shown in figure 3.
   \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{APIDist.png}
@@ -491,9 +487,7 @@ which can be utilized by other researchers interested in employing the FreeFuzz 
   Additionally, they recommend providing instructions on the testing files regarding the prerequisites for executing them on various systems, if possible.
   
 
-
-\section{Conclusions and Future Work}
-\subsection{Future Work}
+\section{Future Work}
 In the current implementation of extending FreeFuzz to the PaddlePaddle library, several limitations exist. 
 Firstly, the team has used MacOS as the testing environment, which does not support CUDA for PaddlePaddle\cite{c1}. 
 Consequently, testing of CUDA related APIs in PaddlePaddle is not possible. 
@@ -502,9 +496,15 @@ To test CUDA related APIs, future developers are advised to use an operating sys
 Secondly, due to limited time and resources, the team conducted the fuzzing process only a few times, 
 resulting in the discovery of only one potential bug. 
 To increase the probability of finding potential bugs, it is recommended that future developers run the fuzzing process multiple times.
+As for the potential bug captured so far, the team targeted the reason for the bug, but failed to find the root cause, 
+thus this would also be a future work to dig into.
 
+In addition, the research team endeavored to employ the Python coverage tool in order to gauge the code coverage of the testing process. Regrettably, the team encountered unresolved difficulties pertaining to the utilization of coverage tools, which impeded the successful implementation of code coverage measurement. Notwithstanding that code coverage measurement is not the exclusive metric for assessing the efficacy of the testing process, and that an elevated code coverage does not inevitably signify a superior quality of the testing process, it remains a valuable metric for appraising and refining the testing process. Consequently, forthcoming efforts ought to be directed towards the realization of code coverage measurement for fuzzing the PaddlePaddle library.
 Finally, the team only used PaddleNLP as the wild project to test FreeFuzz. 
 To improve the robustness of FreeFuzz, future developers are encouraged to use multiple wild projects for testing purposes.
+
+
+
 
 \begin{thebibliography}{9}
 \bibitem{p1} K. He, X. Zhang, S. Ren, and J. Sun. Deep Residual Learning for Image Recognition.
